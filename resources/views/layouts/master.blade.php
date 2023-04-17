@@ -204,114 +204,6 @@
                         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                     </li>
                 </ul>
-                <!-- SEARCH FORM -->
-                {{-- <form class="form-inline ml-3">
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form> --}}
-                <!-- Right navbar links -->
-                {{-- <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="far fa-comments"></i>
-                            <span class="badge badge-danger navbar-badge">3</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
-                                <div class="media">
-                                    <img src="{{ asset('/adminLte/dist/img/user1-128x128.jpg') }}" alt="User Avatar"
-                                        class="img-size-50 mr-3 img-circle">
-                                    <div class="media-body">
-                                        <h3 class="dropdown-item-title">
-                                            Brad Diesel
-                                            <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                        </h3>
-                                        <p class="text-sm">Call me whenever you can...</p>
-                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                    </div>
-                                </div>
-                                <!-- Message End -->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
-                                <div class="media">
-                                    <img src="{{ asset('/adminLte/dist/img/user8-128x128.jpg') }}" alt="User Avatar"
-                                        class="img-size-50 img-circle mr-3">
-                                    <div class="media-body">
-                                        <h3 class="dropdown-item-title">
-                                            John Pierce
-                                            <span class="float-right text-sm text-muted"><i
-                                                    class="fas fa-star"></i></span>
-                                        </h3>
-                                        <p class="text-sm">I got your message bro</p>
-                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                    </div>
-                                </div>
-                                <!-- Message End -->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
-                                <div class="media">
-                                    <img src="{{ asset('/adminLte/dist/img/user3-128x128.jpg') }}" alt="User Avatar"
-                                        class="img-size-50 img-circle mr-3">
-                                    <div class="media-body">
-                                        <h3 class="dropdown-item-title">
-                                            Nora Silvester
-                                            <span class="float-right text-sm text-warning"><i
-                                                    class="fas fa-star"></i></span>
-                                        </h3>
-                                        <p class="text-sm">The subject goes here</p>
-                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                    </div>
-                                </div>
-                                <!-- Message End -->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="far fa-bell"></i>
-                            <span class="badge badge-warning navbar-badge">15</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <span class="dropdown-item dropdown-header">15 Notifications</span>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-envelope mr-2"></i> 4 new messages
-                                <span class="float-right text-muted text-sm">3 mins</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-users mr-2"></i> 8 friend requests
-                                <span class="float-right text-muted text-sm">12 hours</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-file mr-2"></i> 3 new reports
-                                <span class="float-right text-muted text-sm">2 days</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout_page') }}" style="font-weight: bold;color:white;">
-                            LOGOUT
-                        </a>
-                    </li>
-                </ul> --}}
             </nav>
             <!-- /.navbar -->
         @show
@@ -341,143 +233,94 @@
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-                          with font-awesome or any other icon font library -->
-                            {{--  <li class="nav-item">
-                <a href="{{ url('home') }}"  class="nav-link {{ $active == 'home' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Agent Profile
-                    <span class="right badge badge-danger">New</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('sku_inventory') }}"  class="nav-link {{ $active == 'sku_inventory' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Sku_Inventory
-                  </p>
-                </a>
-              </li> --}}
                             <li class="nav-item">
-                                <a href="{{ url('customer') }}"
-                                    class="nav-link {{ $active == 'customer' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-upload"></i>
                                     <p>
-                                        Upload new Customer
+                                        Upload
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('location') }}"
+                                            class="nav-link {{ $active == 'location' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Location
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('principal') }}"
+                                            class="nav-link {{ $active == 'principal' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Principal
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_upload') }}"
+                                            class="nav-link {{ $active == 'van_selling_upload' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Inventory
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
+
                             <li class="nav-item">
-                                <a href="{{ url('customer_data') }}"
-                                    class="nav-link {{ $active == 'customer_data' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-solid fa-list"></i>
                                     <p>
-                                        Customer List & Profile
+                                        Report
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_ledger') }}"
+                                            class="nav-link {{ $active == 'van_selling_ledger' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Inventory Ledger
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_dsrr') }}"
+                                            class="nav-link {{ $active == 'van_selling_dsrr' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                DSRR
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_transaction_report') }}"
+                                            class="nav-link {{ $active == 'van_selling_transaction_report' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Transaction Report
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_cancellation_report') }}"
+                                            class="nav-link {{ $active == 'van_selling_cancellation_report' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Cancellation Report
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                            {{-- <li class="nav-item">
-                <a href="{{ url('sales_register') }}"  class="nav-link {{ $active == 'sales_register' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Upload Sales Register
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('ar_ledger_upload') }}"  class="nav-link {{ $active == 'ar_ledger_upload' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Upload AR Control
-                  </p>
-                </a>
-              </li> --}}
-                            <li class="nav-item">
-                                <a href="{{ url('location') }}"
-                                    class="nav-link {{ $active == 'location' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Upload new Location
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('principal') }}"
-                                    class="nav-link {{ $active == 'principal' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Upload new Principal
-                                    </p>
-                                </a>
-                            </li>
-                            {{-- <li class="nav-item">
-                <a href="{{ url('daily_routine') }}"  class="nav-link {{ $active == 'daily_routine' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Work-Flow
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('bad_order') }}"  class="nav-link {{ $active == 'bad_order' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Bad Order
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('collection_upload_image') }}"  class="nav-link {{ $active == 'collection_upload_image' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Collection Upload Image
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('summary_of_transaction_ledger') }}"  class="nav-link {{ $active == 'summary_of_transaction_ledger' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Summary of Transactions
-                  </p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="{{ url('remitances_locpd') }}"  class="nav-link {{ $active == 'remitances_locpd' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Remitances
-                  </p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="{{ url('locpd') }}"  class="nav-link {{ $active == 'locpd' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Locpd
-                  </p>
-                </a>
-              </li> --}}
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_upload') }}"
-                                    class="nav-link {{ $active == 'van_selling_upload' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Van Selling Upload
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_ledger') }}"
-                                    class="nav-link {{ $active == 'van_selling_ledger' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Van Selling Ledger
-                                    </p>
-                                </a>
-                            </li>
+
+
                             <li class="nav-item">
                                 <a href="{{ url('van_selling_pre_inventory') }}"
                                     class="nav-link {{ $active == 'van_selling_pre_inventory' ? 'active' : '' }}">
@@ -496,32 +339,8 @@
                                     </p>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                <a href="{{ url('van_selling_remittance') }}"  class="nav-link {{ $active == 'van_selling_remittance' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    VS Remittance
-                  </p>
-                </a>
-              </li> --}}
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_transaction_report') }}"
-                                    class="nav-link {{ $active == 'van_selling_transaction_report' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        VS Transaction Report
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_cancellation_report') }}"
-                                    class="nav-link {{ $active == 'van_selling_cancellation_report' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        VS Cancellation Report
-                                    </p>
-                                </a>
-                            </li>
+
+
                             <li class="nav-item">
                                 <a href="{{ url('van_selling_export_sales') }}"
                                     class="nav-link {{ $active == 'van_selling_export_sales' ? 'active' : '' }}">
@@ -549,48 +368,7 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_dsrr') }}"
-                                    class="nav-link {{ $active == 'van_selling_dsrr' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        VS DSRR
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_price_update') }}"
-                                    class="nav-link {{ $active == 'van_selling_price_update' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Van Selling U/P Update
-                                    </p>
-                                </a>
-                            </li>
-                            {{-- <li class="nav-item">
-                <a href="{{ url('bo_outright') }}"  class="nav-link {{ $active == 'bo_outright' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    BO Outright
-                  </p>
-                </a>
-              </li> --}}
-                            {{-- <li class="nav-item">
-                <a href="{{ url('bo_outright_reports') }}"  class="nav-link {{ $active == 'bo_outright_reports' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    BO Outright Reports
-                  </p>
-                </a>
-              </li> --}}
-                            {{-- <li class="nav-item">
-                <a href="{{ url('van_selling_customer') }}"  class="nav-link {{ $active == 'van_selling_customer' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    VS Customer
-                  </p>
-                </a>
-              </li> --}}
+                           
                             <li class="nav-item">
                                 <a href="{{ url('van_selling_transaction') }}"
                                     class="nav-link {{ $active == 'van_selling_transaction' ? 'active' : '' }}">
@@ -600,22 +378,6 @@
                                     </p>
                                 </a>
                             </li>
-                            {{--  <li class="nav-item">
-                <a href="{{ url('van_selling_adjustments') }}"  class="nav-link {{ $active == 'van_selling_adjustments' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    VS Sku Adjustments
-                  </p>
-                </a>
-              </li> --}}
-                            {{-- <li class="nav-item">
-                <a href="{{ url('van_selling_credit_memo') }}"  class="nav-link {{ $active == 'van_selling_credit_memo' ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Van Selling CM
-                  </p>
-                </a>
-              </li> --}}
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->

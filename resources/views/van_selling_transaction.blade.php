@@ -112,7 +112,7 @@
 
         $("#principal").change(function() {
             $('#van_selling_transaction_show_sku_page').show();
-            //$('.loading').show();
+            $('.loading').show();
             $('#hide_if_trigger').show();
             var principal = $('#principal').val();
             var store_name = $('#customer_selection').val();
@@ -121,13 +121,16 @@
                 url: "/van_selling_transaction_show_sku",
                 data: 'principal=' + principal + '&store_name=' + store_name,
                 success: function(data) {
-                    console.log(data);
-
                     $('#van_selling_transaction_show_sku_page').html(data);
                     $('.loading').hide();
                 },
                 error: function(error) {
-                    console.log(error);
+                    $('.loading').hide();
+                    Swal.fire(
+                        'Cannot Proceed',
+                        'Please Contact IT Support',
+                        'error'
+                    )
                 }
             });
         });
@@ -137,7 +140,7 @@
         $("#van_selling_transaction_proceed").on('submit', (function(e) {
             e.preventDefault();
             //$('.loading').show();
-            $('#hide_if_trigger').hide();
+            // $('#hide_if_trigger').hide();
             $.ajax({
                 url: "van_selling_transaction_proceed",
                 type: "POST",
@@ -146,14 +149,28 @@
                 cache: false,
                 processData: false,
                 success: function(data) {
-                    console.log(data);
-
-                    $('.loading').hide();
-                    $("#principal").val('').trigger('change');
-                    $('#van_selling_transaction_show_sku_page').hide();
-                    $('#van_selling_transaction_proceed_page').html(data);
-                    $('#hide_if_trigger').show();
+                    if (data == 'Insufficient') {
+                        Swal.fire(
+                            'Cannot Proceed',
+                            'Insufficient Quantity',
+                            'error'
+                        )
+                    } else {
+                        $('.loading').hide();
+                        // $("#principal").val('').trigger('change');
+                        // $('#van_selling_transaction_show_sku_page').hide();
+                        $('#van_selling_transaction_proceed_page').html(data);
+                        $('#hide_if_trigger').show();
+                    }
                 },
+                error: function(error) {
+                    $('.loading').hide();
+                    Swal.fire(
+                        'Cannot Proceed',
+                        'Please Contact IT Support',
+                        'error'
+                    )
+                }
             });
         }));
     </script>

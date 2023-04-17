@@ -15,6 +15,9 @@ use App\Models\Van_selling_bo_deduction;
 use App\Models\Van_selling_os_cart_details;
 use App\Models\Van_selling_os_data;
 use App\Models\Van_selling_calls;
+use App\Models\Vs_upload_inventory;
+use App\Models\Vs_os_inventories;
+use App\Models\Vs_cart;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +27,7 @@ class Van_selling_transaction_controller extends Controller
     public function index()
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('van_selling_transaction_cart_details')->truncate();
+        DB::table('Vs_carts')->truncate();
         DB::table('Van_selling_os_cart_details')->truncate();
         Schema::enableForeignKeyConstraints();
 
@@ -37,7 +40,7 @@ class Van_selling_transaction_controller extends Controller
         } else {
             $van_selling_customer = Van_selling_customer::get();
             $van_selling_customer_check = Van_selling_customer::where('status', null)->count();
-            $principal = Van_selling_upload_ledger::select('principal')->where('end', '!=', '0')->groupBy('principal')->get();
+            $principal = Vs_upload_inventory::select('principal')->groupBy('principal')->get();
             return view('van_selling_transaction', [
                 'principal' => $principal,
                 'van_selling_customer_check' => $van_selling_customer_check,
@@ -49,276 +52,64 @@ class Van_selling_transaction_controller extends Controller
 
     public function van_selling_transaction_show_sku(Request $request)
     {
-
-        $check_van_selling_transaction_cart = Van_selling_transaction_cart_details::select('sku_code')->where('principal', $request->input('principal'))->get();
-
-
-        if (count($check_van_selling_transaction_cart) != 0) {
-            $check_van_selling_os_cart = Van_selling_os_cart_details::select('sku_code')->where('principal', $request->input('principal'))->get();
-
-            $counter = count($check_van_selling_transaction_cart);
-
-            $sku_ledger = Van_selling_upload_ledger::select('sku_code')
-                ->where('principal', $request->input('principal'))
-                ->groupBy('sku_code')
-                ->whereNotIn('sku_code', $check_van_selling_transaction_cart->toArray())
-                ->get();
-
-            $sku_database = Van_selling_transaction_cart_details::select('id', 'description', 'price', 'beg', 'quantity')->whereIn('sku_code', $check_van_selling_transaction_cart->toArray())->get();
-
-            $van_selling_inventory = Van_selling_inventories::where('principal', $request->input('principal'))
-                ->whereNotIn('sku_code', $sku_ledger->toArray())
-                ->whereNotIn('sku_code', $check_van_selling_os_cart->toArray())
-                ->get();
-
-            $van_selling_cart_data = Van_selling_os_cart_details::where('principal', $request->input('principal'))->get();
-
-            $counter_sku_ledger = count($sku_ledger);
-            return view('van_selling_transaction_show_sku_page', [
-                'check_van_selling_transaction_cart' => $check_van_selling_transaction_cart,
-                'sku_ledger' => $sku_ledger,
-                'van_selling_inventory' => $van_selling_inventory,
-                'sku_database' => $sku_database,
-                'van_selling_cart_data' => $van_selling_cart_data,
-            ])->with('counter_sku_ledger', $counter_sku_ledger)
-                ->with('counter', $counter);
-        } else {
-            if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
-                $sku_ledger = Van_selling_upload_ledger::select('sku_code')
-                    ->where('principal', $request->input('principal'))
-                    ->groupBy('sku_code')
-                    ->get();
-
-                $check_van_selling_os_cart = Van_selling_os_cart_details::select('sku_code')->where('principal', $request->input('principal'))->get();
-
-                $van_selling_inventory = Van_selling_inventories::where('principal', $request->input('principal'))
-                    ->whereNotIn('sku_code', $sku_ledger->toArray())
-                    ->whereNotIn('sku_code', $check_van_selling_os_cart->toArray())
-                    ->get();
-
-                $van_selling_cart_data = Van_selling_os_cart_details::where('principal', $request->input('principal'))->get();
-
-                $counter = count($sku_ledger);
-
-                return view('van_selling_transaction_show_sku_page', [
-                    'sku_ledger' => $sku_ledger,
-                    'van_selling_inventory' => $van_selling_inventory,
-                    'van_selling_cart_data' => $van_selling_cart_data,
-                ])->with('counter', $counter);
-            } else {
-                $vs_customer = Van_selling_customer::select('store_name')->find($request->input('store_name'));
-
-                $sku_ledger = Van_selling_upload_ledger::select('sku_code')
-                    ->where('principal', $request->input('principal'))
-                    ->groupBy('sku_code')
-                    ->get();
-
-                $check_van_selling_os_cart = Van_selling_os_cart_details::select('sku_code')->where('principal', $request->input('principal'))->get();
-
-                $van_selling_inventory = Van_selling_inventories::where('principal', $request->input('principal'))
-                    ->whereNotIn('sku_code', $sku_ledger->toArray())
-                    ->whereNotIn('sku_code', $check_van_selling_os_cart->toArray())
-                    ->get();
-
-                $van_selling_cart_data = Van_selling_os_cart_details::where('principal', $request->input('principal'))->get();
-
-                $counter = count($sku_ledger);
-
-                return view('van_selling_transaction_show_sku_page', [
-                    'sku_ledger' => $sku_ledger,
-                    'van_selling_inventory' => $van_selling_inventory,
-                    'van_selling_cart_data' => $van_selling_cart_data,
-                ])->with('counter', $counter);
-            }
-        }
+        //return $request->input();
+        $principal = $request->input('principal');
+        $sku = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories WHERE principal = '$principal'  GROUP BY sku_code)");
+        $os_sku = Vs_os_inventories::select('sku_code', 'description', 'unit_price')->get();
+        return view('van_selling_transaction_show_sku_page', [
+            'sku' => $sku,
+            'os_sku' => $os_sku,
+        ]);
     }
 
     public function van_selling_transaction_proceed(Request $request)
     {
         //return $request->input();
-        if (is_null($request->input('cart_id'))) {
-            $quantity_ordered = array_filter($request->input('quantity_ordered'));
-            if (count($quantity_ordered) != 0) {
-                foreach ($quantity_ordered as $key => $data) {
-                    if ($data > $request->input('ending_balance')[$key]) {
-                        $quantity_error[] = '<center>INSUFFICIENT QUANTITY OF <span style="color:blue;font-weight:bold;"> ' . $key . " " . $request->input('description')[$key] . "</span>. REMAINING QUANTITY IS ONLY <span style='color:red;font-weight:bold;'>" . $request->input('ending_balance')[$key] . ". SKU CANNOT BE ADDED TO TRANSACTION</span></center";
-                    } else {
-                        $quantity_error[] = '';
-                        $check = Van_selling_transaction_cart_details::where('sku_code', $key)->first();
-                        if ($check) {
-                        } else {
-                            $van_selling_transaction_cart_details = new Van_selling_transaction_cart_details([
-                                'sku_code' => $key,
-                                'description' => $request->input('description')[$key],
-                                'principal' => $request->input('principal_data')[$key],
-                                'quantity' => $request->input('quantity_ordered')[$key],
-                                'unit_of_measurement' => $request->input('unit_of_measurement')[$key],
-                                'sku_type' => $request->input('sku_type')[$key],
-                                'butal_equivalent' => $request->input('butal_equivalent')[$key],
-                                'beg' => $request->input('ending_balance')[$key],
-                                'price' => $request->input('unit_price')[$key],
-                                'user_id' => $request->input('user_id'),
-                            ]);
-                            $van_selling_transaction_cart_details->save();
-                        }
-                    }
-                }
-            } else {
-                $quantity_error[] = '';
+        $sku_quantity = array_filter($request->input('sku_quantity'));
+        $os_quantity = array_filter($request->input('os_quantity'));
+
+        foreach ($sku_quantity as $checker_key => $checker_value) {
+            if ($checker_value > $request->input('running_balance')[$checker_key]) {
+                return 'Insufficient';
             }
-
-
-
-            $os_if_not_null = $request->input('os_ordered');
-            if (isset($os_if_not_null)) {
-                $os_inventory = array_filter($os_if_not_null);
-                foreach ($os_inventory as $key => $os_data) {
-                    $check_os_cart = Van_selling_os_cart_details::where('sku_code', $key)->first();
-                    $sku_os_inventory = Van_selling_inventories::find($key);
-                    if ($check_os_cart) {
-                        Van_selling_os_cart_details::where('van_selling_inventory_id', $check_os_cart->id)
-                            ->update(['quantity' => $os_data]);
-                    } else {
-                        $new_van_selling_os_cart = new Van_selling_os_cart_details([
-                            'van_selling_inventory_id' => $key,
-                            'sku_code' => $sku_os_inventory->sku_code,
-                            'principal' => $sku_os_inventory->principal,
-                            'quantity' => $os_data,
-                            'unit_price' => $sku_os_inventory->unit_price,
-                        ]);
-
-                        $new_van_selling_os_cart->save();
-                    }
-                }
-            }
-
-
-            if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
-                $van_selling_customer = '';
-                $location = Location::select('id', 'location')->get();
-            } else {
-                $van_selling_customer = Van_selling_customer::find($request->input('customer_selection'));
-                $location = '';
-            }
-
-            //return $quantity_error;
-
-            $van_selling_cart_data = Van_selling_transaction_cart_details::all();
-            $van_selling_os_cart_data = Van_selling_os_cart_details::all();
-            return view('van_selling_transaction_proceed_page', [
-                'van_selling_cart_data' => $van_selling_cart_data,
-                'van_selling_customer' => $van_selling_customer,
-                'van_selling_os_cart_data' => $van_selling_os_cart_data,
-                'location' => $location,
-            ])->with('customer_selection', $request->input('customer_selection'))
-                ->with('full_name', $request->input('full_name'))
-                ->with('user_id', $request->input('user_id'))
-                ->with('quantity_error', $quantity_error);
-        } else {
-
-            $os_if_not_null = $request->input('os_ordered');
-            if (isset($os_if_not_null)) {
-                $os_inventory = array_filter($request->input('os_ordered'));
-                $if_diff_ordered_and_current_quantity = array_diff($request->input('update_quantity_ordered'), $request->input('update_current_quantity_ordered'));
-            } else {
-                $if_diff_ordered_and_current_quantity = [];
-            }
-
-            foreach ($request->input('update_quantity_ordered') as $id => $data) {
-                if ($request->input('update_current_quantity_ordered')[$id] != $data) {
-                    if ($data > $request->input('update_ending_balance')[$id]) {
-                        $quantity_error[] = '<center>INSUFFICIENT QUANTITY OF <span style="color:blue;font-weight:bold;"> ' . $request->input('update_description')[$id] . "</span>. REMAINING QUANTITY IS ONLY <span style='color:red;font-weight:bold;'>" . $request->input('update_ending_balance')[$id] . ". SKU QTY REMAINS THE SAME</span>.</center><br /> ";
-                    } else {
-                        $quantity_error[] = '';
-                        Van_selling_transaction_cart_details::where('id', $id)
-                            ->update(['quantity' => $request->input('update_quantity_ordered')[$id]]);
-                    }
-                }
-            }
-
-
-
-            if (count($if_diff_ordered_and_current_quantity) != 0) {
-                foreach ($os_inventory as $key => $os_data) {
-                    $check_os_cart = Van_selling_os_cart_details::where('sku_code', $key)->first();
-                    $sku_os_inventory = Van_selling_inventories::find($key);
-                    if ($check_os_cart) {
-                        Van_selling_os_cart_details::where('van_selling_inventory_id', $check_os_cart->id)
-                            ->update(['quantity' => $os_data]);
-                    } else {
-                        $new_van_selling_os_cart = new Van_selling_os_cart_details([
-                            'van_selling_inventory_id' => $key,
-                            'sku_code' => $sku_os_inventory->sku_code,
-                            'principal' => $sku_os_inventory->principal,
-                            'quantity' => $os_data,
-                            'unit_price' => $sku_os_inventory->unit_price,
-                        ]);
-
-                        $new_van_selling_os_cart->save();
-                    }
-                }
-            }
-
-            $quantity_ordered = $request->input('quantity_ordered');
-            if (isset($quantity_ordered)) {
-                foreach ($quantity_ordered as $key => $data) {
-                    if ($data > $request->input('ending_balance')[$key]) {
-                        $quantity_error[] = '<center>INSUFFICIENT QUANTITY OF <span style="color:blue;font-weight:bold;"> ' . $key . " " . $request->input('description')[$key] . "</span>. REMAINING QUANTITY IS ONLY <span style='color:red;font-weight:bold;'>" . $request->input('ending_balance')[$key] . ". SKU CANNOT BE ADDED TO TRANSACTION</span></center><br />";
-                    } else {
-                        $quantity_error[] = '';
-                        $check = Van_selling_transaction_cart_details::where('sku_code', $key)->first();
-                        if ($check) {
-                        } else {
-                            $van_selling_transaction_cart_details = new Van_selling_transaction_cart_details([
-                                'sku_code' => $key,
-                                'description' => $request->input('description')[$key],
-                                'principal' => $request->input('principal_data')[$key],
-                                'quantity' => $request->input('quantity_ordered')[$key],
-                                'unit_of_measurement' => $request->input('unit_of_measurement')[$key],
-                                'sku_type' => $request->input('sku_type')[$key],
-                                'butal_equivalent' => $request->input('butal_equivalent')[$key],
-                                'beg' => $request->input('ending_balance')[$key],
-                                'price' => $request->input('unit_price')[$key],
-                                'user_id' => $request->input('user_id'),
-                            ]);
-                            $van_selling_transaction_cart_details->save();
-                        }
-                    }
-                }
-            } else {
-                $quantity_error[] = '';
-            }
-
-
-            if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
-                $van_selling_customer = '';
-                $location = Location::select('id', 'location')->get();
-            } else {
-                $van_selling_customer = Van_selling_customer::find($request->input('customer_selection'));
-                $location = '';
-            }
-
-            $van_selling_cart_data = Van_selling_transaction_cart_details::all();
-            $van_selling_os_cart_data = Van_selling_os_cart_details::all();
-
-
-            return view('van_selling_transaction_proceed_page', [
-                'van_selling_cart_data' => $van_selling_cart_data,
-                'van_selling_customer' => $van_selling_customer,
-                'van_selling_os_cart_data' => $van_selling_os_cart_data,
-                'location' => $location,
-            ])->with('customer_selection', $request->input('customer_selection'))
-                ->with('full_name', $request->input('full_name'))
-                ->with('user_id', $request->input('user_id'))
-                ->with('quantity_error', $quantity_error);
         }
+
+        foreach ($sku_quantity as $key => $data) {
+            $cart_checker = Vs_cart::select('id')->where('sku_code', $key)->count();
+            if ($cart_checker > 0) {
+                Vs_cart::where('id', $cart_checker)
+                    ->update(['quantity' => $data]);
+            } else {
+                $sku = Vs_os_inventories::where('sku_code', $key)->latest()->first();
+                $vs_cart = new Vs_cart([
+                    'sku_code' => $key,
+                    'description' => $sku->description,
+                    'principal' => $sku->principal,
+                    'quantity' => $data,
+                    'unit_of_measurement' => $sku->unit_of_measurement,
+                    'sku_type' => $sku->sku_type,
+                    'price' => $sku->unit_price
+                ]);
+                $vs_cart->save();
+            }
+        }
+
+        foreach ($os_quantity as $os_key => $os_data) {
+            # code...
+        }
+
+        $cart = Vs_cart::get();
+
+        return view('van_selling_transaction_proceed_page',[
+            'cart' => $cart,
+        ]);
     }
 
     public function van_selling_transaction_summary(Request $request)
     {
 
         //return $request->input();
-        
+
         if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
             $check_customer_dup = Van_selling_customer::where('store_name', strtoupper($request->input('store_name')))->first();
             if ($check_customer_dup) {
@@ -568,7 +359,7 @@ class Van_selling_transaction_controller extends Controller
         }
 
 
-         return redirect()->route('van_selling_transaction_report');
+        return redirect()->route('van_selling_transaction_report');
     }
 
     public function van_selling_transaction_unproductive_process(Request $request)
