@@ -834,3 +834,111 @@ if (is_null($request->input('cart_id'))) {
         })
     });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//return $request->input();
+
+        if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
+            $check_customer_dup = Van_selling_customer::where('store_name', strtoupper($request->input('store_name')))->first();
+            if ($check_customer_dup) {
+                return 'existing';
+            }
+        }
+
+        date_default_timezone_set('Asia/Manila');
+        $date = date('Y-m-d');
+        $time = date('h:i:s a');
+        $date_receipt = date('Y-m');
+
+        $van_selling_transaction = Van_selling_transaction::select('delivery_receipt')->latest()->first();
+
+        if (!is_null($van_selling_transaction)) {
+            $var_explode = explode('-', $van_selling_transaction->delivery_receipt);
+            $year_and_month = $var_explode[2] . "-" . $var_explode[3];
+            $series = $var_explode[4];
+
+
+            if ($date_receipt != $year_and_month) {
+                $delivery_receipt = "VS-" . $request->input('user_id') . "-" . $date_receipt  . "-0001";
+            } else {
+                $delivery_receipt = "VS-" . $request->input('user_id') . "-" . $date_receipt . "-" . str_pad($series + 1, 4, 0, STR_PAD_LEFT);
+            }
+        } else {
+            $delivery_receipt = "VS-" . $request->input('user_id') . "-" . $date_receipt  . "-0001";
+        }
+
+        $van_selling_cart_data = Van_selling_transaction_cart_details::all();
+
+        $van_selling_os_cart_details = Van_selling_os_cart_details::all();
+
+        $van_selling_os_data = Van_selling_os_data::select('sku_code')
+            ->where('served_date', NULL)
+            ->where('store_name', $request->input('store_name'))
+            ->orderBy('id', 'desc')
+            ->get();
+
+        if (count($van_selling_os_data) != 0) {
+            $van_selling_cart_os_data = Van_selling_transaction_cart_details::select('sku_code', 'quantity', 'price')->whereIn('sku_code', $van_selling_os_data->toArray())->get();
+            foreach ($van_selling_cart_os_data as $key => $os_data_temp_quantity) {
+                Van_selling_os_data::where('sku_code', $os_data_temp_quantity->sku_code)
+                    ->where('served_date', NULL)
+                    ->where('store_name', $request->input('store_name'))
+                    ->orderBy('id', 'desc')
+                    ->update([
+                        'temp_quantity' => $os_data_temp_quantity->quantity,
+                        'temp_unit_price' => $os_data_temp_quantity->price,
+                    ]);
+            }
+        } else {
+            $van_selling_cart_os_data = [];
+        }
+
+        return view('van_selling_transaction_summary_page', [
+            'van_selling_cart_data' => $van_selling_cart_data,
+            'van_selling_cart_os_data' => $van_selling_cart_os_data,
+            'van_selling_os_cart_details' => $van_selling_os_cart_details,
+        ])->with('customer_selection', $request->input('customer_selection'))
+            ->with('store_id', $request->input('store_id'))
+            ->with('full_name', $request->input('full_name'))
+            ->with('user_id', $request->input('user_id'))
+            ->with('pcm_number', strtoupper($request->input('pcm_number')))
+            ->with('bo_amount', str_replace(',', '', $request->input('bo_amount')))
+            ->with('delivery_receipt', $delivery_receipt)
+            ->with('date', $date)
+            ->with('time', $time)
+            ->with('address', strtoupper($request->input('address')))
+            ->with('barangay', strtoupper($request->input('barangay')))
+            ->with('location', strtoupper($request->input('location_data')))
+            ->with('store_name', strtoupper($request->input('store_name')))
+            ->with('store_type', strtoupper($request->input('store_type')));
