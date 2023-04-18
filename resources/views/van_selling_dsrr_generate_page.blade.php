@@ -20,7 +20,7 @@
                 </tr>
                 <tr>
                     <th>CSI #</th>
-                    <th>CUSTOMER</th>
+                    <th>STORE</th>
                     <th>BO</th>
                     <th>AMOUNT</th>
                 </tr>
@@ -29,8 +29,7 @@
                 @foreach ($van_selling_transaction as $data)
                     <tr>
                         <th>{{ $data->delivery_receipt }}</th>
-                        <th>{{ $data->store_name }} | <br />
-                            {{ $data->full_address }}
+                        <th>{{ $data->store_name }}
                         </th>
                         <th style="text-align: right;">({{ $data->bo_amount }})</th>
                         <th style="text-align: right;">
@@ -91,16 +90,13 @@
                     <th colspan="5" style="text-align: center;">Kauswagan Cagayan de Oro City</th>
                 </tr>
                 <tr>
-                    <th colspan="5" style="text-align: center;">DSRR</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">{{ $search_for }}</th>
+                    <th colspan="5" style="text-align: center;">All Principal</th>
                 </tr>
                 <tr>
                     <th colspan="5" style="text-align: center;">{{ $full_name }}</th>
                 </tr>
                 <tr>
-                    <th colspan="5" style="text-align: center;">{{ $date_from . ' TO ' . $date_to }}</th>
+                    <th colspan="5" style="text-align: center;">FROM {{ $date_from . ' TO ' . $date_to }}</th>
                 </tr>
                 <tr>
                     <th>STORE</th>
@@ -113,7 +109,7 @@
                 @foreach ($van_selling_transaction as $data)
                     @foreach ($data->van_selling_transaction_details as $details)
                         <tr>
-                            <th>{{ $data->store_name }}|<br />{{ $data->full_address }}</th>
+                            <th>{{ $data->store_name }}</th>
                             <th>{{ $details->description }} - {{ $details->price }}</th>
                             <th style="text-align: right;">{{ $details->quantity }}</th>
                             <th style="text-align: right;">
@@ -161,9 +157,6 @@
                     <th colspan="5" style="text-align: center;">Kauswagan Cagayan de Oro City</th>
                 </tr>
                 <tr>
-                    <th colspan="5" style="text-align: center;">DSRR</th>
-                </tr>
-                <tr>
                     <th colspan="5" style="text-align: center;">{{ $search_for }}</th>
                 </tr>
                 <tr>
@@ -173,7 +166,7 @@
                     <th colspan="5" style="text-align: center;">{{ $date_from . ' TO ' . $date_to }}</th>
                 </tr>
                 <tr>
-                    <th>ACCNT</th>
+                    <th>STORE</th>
                     <th>DESC</th>
                     <th>QTY</th>
                     <th>AMOUNT</th>
@@ -182,8 +175,7 @@
             <tbody>
                 @foreach ($van_selling_transaction_details as $details)
                     <tr>
-                        <th>{{ $details->van_selling_transaction->store_name }}|<br />
-                            {{ $details->van_selling_transaction->full_address }}</th>
+                        <th>{{ $details->van_selling_transaction->store_name }}</th>
                         <th>
                             {{ $details->description }} - {{ $details->price }}
                         </th>

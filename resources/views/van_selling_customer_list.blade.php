@@ -30,7 +30,8 @@
                  @csrf
                  <div class="card-body">
                      <div class="table table-responsive">
-                         <table class="table table-bordered btn-sm table-striped table-hover" style="font-size:13px;" id="export_table">
+                         <table class="table table-bordered btn-sm table-striped table-hover"
+                             id="export_table">
                              <thead>
                                  <tr>
                                      <th>ID</th>
@@ -50,19 +51,19 @@
                              <tbody>
                                  @foreach ($van_selling_customer_list as $data)
                                      <tr>
-                                         <td>{{ str_replace(',','',$data->id)  }}</td>
-                                         <td>{{ str_replace(',','',$data->location_id)  }}</td>
-                                         <td>{{ str_replace(',','',$data->store_name)  }}</td>
-                                         <td>{{ str_replace(',','',$data->store_type)  }}</td>
-                                         <td>{{ str_replace(',','',$data->barangay)  }}</td>
-                                         <td>{{ str_replace(',','',$data->address)  }}</td>
-                                         <td>{{ str_replace(',','',$data->contact_person)  }}</td>
-                                         <td>{{ str_replace(',','',$data->contact_number)  }}</td>
-                                         <td>{{ str_replace(',','',$data->longitude)  }}</td>
-                                         <td>{{ str_replace(',','',$data->latitude)  }}</td>
+                                         <td>{{ str_replace(',', '', $data->id) }}</td>
+                                         <td>{{ str_replace(',', '', $data->location_id) }}</td>
+                                         <td>{{ str_replace(',', '', $data->store_name) }}</td>
+                                         <td>{{ str_replace(',', '', $data->store_type) }}</td>
+                                         <td>{{ str_replace(',', '', $data->barangay) }}</td>
+                                         <td>{{ str_replace(',', '', $data->address) }}</td>
+                                         <td>{{ str_replace(',', '', $data->contact_person) }}</td>
+                                         <td>{{ str_replace(',', '', $data->contact_number) }}</td>
+                                         <td>{{ str_replace(',', '', $data->longitude) }}</td>
+                                         <td>{{ str_replace(',', '', $data->latitude) }}</td>
                                          <td>
                                              @if ($data->status == null)
-                                                 <a class="btn btn-primary btn-block"
+                                                 <a class="btn btn-primary btn-block btn-sm"
                                                      href="{{ url('van_selling_customer_edit', ['id' => $data->id]) }}">(+)
                                                      Store Info</a>
                                                  <input type="hidden" id="need_to_update" value="need_to_update">
@@ -72,6 +73,7 @@
                                          </td>
                                          <td>
                                              <input type="hidden" value="{{ $data->id }}" name="customer_id[]">
+                                             Ready for Export
                                          </td>
                                      </tr>
                                  @endforeach
@@ -93,7 +95,7 @@
              <div class="card-footer">
                  <div class="row">
                      @if (count($van_selling_customer_list) != 0)
-                         <div class="col-md-3">
+                         <div class="col-md-3" style="margin-bottom: 10px;">
                              <button class="btn btn-success btn-sm btn-block" type="button"
                                  onclick="exportTableToCSV('VAN SELLING CUSTOMER AGENT SYSTEM.csv')">EXPORT
                                  CUSTOMER</button>

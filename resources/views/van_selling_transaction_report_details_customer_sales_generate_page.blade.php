@@ -1,12 +1,13 @@
 @if (count($van_selling_transaction) != 0)
     <div class="table table-responsive">
-        <table class="table table-bordered table-hovered" id="export_table">
+        <table class="table table-bordered table-hovered table-striped table-sm" id="export_table">
             <thead>
                 <tr>
                     <th></th>
                     <th></th>
                     <th></th>
                     <th colspan="2" style="text-align: center;">VAN SELLING EXPORT</th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -20,8 +21,10 @@
                     <th></th>
                     <th>DATE RANGE</th>
                     <th>{{ $date_from . ' - ' . $date_to }}</th>
+                    <th></th>
                 </tr>
                 <tr>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -53,9 +56,9 @@
                                 <td>{{ $data->delivery_receipt }}</td>
                                 <td>{{ $details->sku_code }}</td>
                                 <td>{{ $details->description }}</td>
-                                <td>{{ $details->quantity }}</td>
-                                <td>{{ $details->price }}</td>
-                                <td>{{ $details->amount }}</td>
+                                <td style="text-align: right">{{ $details->quantity }}</td>
+                                <td style="text-align: right">{{ $details->price }}</td>
+                                <td style="text-align: right">{{ $details->amount }}</td>
                                 <td>{{ $details->remarks }}</td>
                             </tr>
                         @endif

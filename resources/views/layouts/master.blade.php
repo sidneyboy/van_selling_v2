@@ -295,7 +295,7 @@
                                             class="nav-link {{ $active == 'van_selling_dsrr' ? 'active' : '' }}">
                                             <i class="nav-icon fas fa-solid fa-arrow-right"></i>
                                             <p>
-                                                DSRR
+                                                Sales Report
                                             </p>
                                         </a>
                                     </li>
@@ -320,61 +320,72 @@
                                 </ul>
                             </li>
 
-
                             <li class="nav-item">
-                                <a href="{{ url('van_selling_pre_inventory') }}"
-                                    class="nav-link {{ $active == 'van_selling_pre_inventory' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
+                                <a href="#" class="nav-link">
+                                    {{-- <i class=" fas fa-solid fa-list"></i> --}}
+                                    <i class="nav-icon fas fa-solid fa-file-export"></i>
                                     <p>
-                                        VS Pre Inventory
+                                        Export
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_ar_ledger') }}"
-                                    class="nav-link {{ $active == 'van_selling_ar_ledger' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        SDA
-                                    </p>
-                                </a>
-                            </li>
-
-
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_export_sales') }}"
-                                    class="nav-link {{ $active == 'van_selling_export_sales' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        VS Export Sales
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('van_selling_audit_export_sales') }}"
-                                    class="nav-link {{ $active == 'van_selling_audit_export_sales' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        VS Audit Export Sales
-                                    </p>
-                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_pre_inventory') }}"
+                                            class="nav-link {{ $active == 'van_selling_pre_inventory' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Pre Inventory
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_ar_ledger') }}"
+                                            class="nav-link {{ $active == 'van_selling_ar_ledger' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                SDA
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_export_sales') }}"
+                                            class="nav-link {{ $active == 'van_selling_export_sales' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                Sales 
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('van_selling_customer_list') }}"
                                     class="nav-link {{ $active == 'van_selling_customer_list' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
+                                    <i class="nav-icon fas fa-solid fa-store"></i>
                                     <p>
-                                        VS Customer
+                                        Customer
                                     </p>
                                 </a>
                             </li>
-                           
+
+                            {{-- <li class="nav-item">
+                                <a href="{{ url('van_selling_os_transaction') }}"
+                                    class="nav-link {{ $active == 'van_selling_os_transaction' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-solid fa-store"></i>
+                                    <p>
+                                        OS
+                                    </p>
+                                </a>
+                            </li> --}}
+
                             <li class="nav-item">
                                 <a href="{{ url('van_selling_transaction') }}"
                                     class="nav-link {{ $active == 'van_selling_transaction' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-th"></i>
+                                    {{-- <i class="nav-icon fas fa-th"></i> --}}
+                                    <i class="nav-icon fas fa-solid fa-money-bill"></i>
                                     <p>
-                                        Van Selling Transaction
+                                        Transaction
                                     </p>
                                 </a>
                             </li>

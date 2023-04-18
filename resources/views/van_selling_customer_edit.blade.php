@@ -29,6 +29,16 @@
             <form action="{{ route('van_selling_customer_edit_process') }}" method="post">
                 @csrf
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
                     <label for="">CONTACT PERSON</label>
                     <input type="text" name="contact_person" required class="form-control">
 
@@ -38,13 +48,13 @@
 
                     <input type="hidden" id="marker_image" value="{{ asset('images/marker.png') }}">
 
-                    
-                    <input type="hidden" name="longitude" id="longitude" required class="form-control">
-                    <input type="hidden" name="latitude" id="latitude" required class="form-control">
+
+                    <input type="hidden" name="longitude" id="longitude" class="form-control">
+                    <input type="hidden" name="latitude" id="latitude" class="form-control">
 
                     <input type="hidden" value="{{ $customer->id }}" name="id">
 
-                    
+
                 </div>
 
                 <div class="card-body">
@@ -86,8 +96,8 @@
                 // x.innerHTML = "Latitude: " + position.coords.latitude +
                 //     "<br>Longitude: " + position.coords.longitude;
 
-          //       $('#latitude').val(position.coords.latitude);
-          //       $('#longitude').val(position.coords.longitude);
+                //       $('#latitude').val(position.coords.latitude);
+                //       $('#longitude').val(position.coords.longitude);
 
                 var view = new ol.View({
                     projection: 'EPSG:4326',

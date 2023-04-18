@@ -30,13 +30,16 @@
                  <form action="{{ route('van_selling_export_sales_update_remarks') }}" method="post">
                      @csrf
                      <div class="table table-responsive">
-                         <table class="table table-bordered table-hovered" id="export_table">
+                         <table class="table table-bordered table-sm table-striped" id="export_table">
                              <thead>
                                  <tr>
                                      <th></th>
                                      <th></th>
                                      <th></th>
                                      <th colspan="2" style="text-align: center;">VAN SELLING EXPORT</th>
+                                     <th></th>
+                                     <th></th>
+                                     <th></th>
                                      <th></th>
                                      <th></th>
                                      <th></th>
@@ -50,8 +53,14 @@
                                      <th></th>
                                      <th>DATE EXPORTED</th>
                                      <th>{{ $date }}</th>
+                                     <th></th>
+                                     <th></th>
+                                     <th></th>
                                  </tr>
                                  <tr>
+                                     <th></th>
+                                     <th></th>
+                                     <th></th>
                                      <th></th>
                                      <th></th>
                                      <th></th>

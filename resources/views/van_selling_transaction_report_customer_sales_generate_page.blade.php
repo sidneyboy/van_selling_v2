@@ -1,6 +1,6 @@
 @if (count($van_selling_transaction) != 0)
     <div class="table table-responsive" id="printableArea">
-        <table class="table table-bordered table-hovered" id="export_table">
+        <table class="table table-bordered table-hovered table-striped table-sm" id="export_table">
             <thead>
                 <tr>
                     <th>{{ $full_name }}</th>
@@ -28,7 +28,7 @@
                     <th>CUSTOMER</th>
                     <th>DR</th>
                     <th>PCM</th>
-                    <th>BO DEDUCTIOn</th>
+                    <th>BO DEDUCTION</th>
                     <th>AMOUNT</th>
                     <th>STATUS</th>
                 </tr>
@@ -41,7 +41,7 @@
                         <td>{{ $data->store_name }}</td>
                         <td>{{ $data->delivery_receipt }}</td>
                         <td>{{ $data->pcm_number }}</td>
-                        <td>{{ $data->bo_amount }}</td>
+                        <td style="text-align: right">{{ $data->bo_amount }}</td>
                         <td style="text-align: right;">
                             @if ($data->status != 'CANCELLED')
                                 @php
@@ -174,7 +174,7 @@
                     data: 'van_selling_transaction_id=' + van_selling_transaction_id +
                         '&text=' + text,
                     success: function(data) {
-                        console.log(data);
+                        $('.loading').hide();
                         if (data == 'saved') {
                             Swal.fire(
                                 'Transaction Cancelled!',
@@ -193,7 +193,12 @@
                         }
                     },
                     error: function(error) {
-                        console.log(error);
+                        $('.loading').hide();
+                        Swal.fire(
+                            'Cannot Proceed',
+                            'Please Contact IT Support',
+                            'error'
+                        )
                     }
                 });
             }

@@ -1,5 +1,5 @@
 <div class="table table-responsive">
-	<table class="table table-bordered table-hover table-sm" id="export_table">
+	<table class="table table-bordered table-hover table-sm table-striped" id="export_table">
 	<thead>	
 			<tr>
 				<th>CANCELLATION REPORT</th>

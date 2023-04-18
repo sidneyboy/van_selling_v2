@@ -169,6 +169,7 @@ Route::get('/van_selling_transaction_report', [App\Http\Controllers\van_selling_
 Route::post('/van_selling_transaction_report_generate', [App\Http\Controllers\van_selling_transaction_report_controller::class, 'van_selling_transaction_report_generate'])->name('van_selling_transaction_report_generate');
 Route::post('/van_selling_transaction_report_cancel', [App\Http\Controllers\van_selling_transaction_report_controller::class, 'van_selling_transaction_report_cancel'])->name('van_selling_transaction_report_cancel');
 Route::get('/van_selling_transaction_report_print_table/{id}', [App\Http\Controllers\van_selling_transaction_report_controller::class, 'van_selling_transaction_report_print_table'])->name('van_selling_transaction_report_print_table');
+Route::post('/van_selling_calls_report_export/', [App\Http\Controllers\van_selling_transaction_report_controller::class, 'van_selling_calls_report_export'])->name('van_selling_calls_report_export');
 
 
 
@@ -242,6 +243,10 @@ Route::get('/van_selling_customer_geo_tag/', [App\Http\Controllers\Van_selling_c
 Route::get('/van_selling_customer_geo_tag_view/{id}', [App\Http\Controllers\Van_selling_customer_list_controller::class, 'van_selling_customer_geo_tag_view'])->name('van_selling_customer_geo_tag_view');
 Route::get('/van_selling_barangay_geo_tag', [App\Http\Controllers\Van_selling_customer_list_controller::class, 'van_selling_barangay_geo_tag'])->name('van_selling_barangay_geo_tag');
 
+
+
+Route::get('/van_selling_os_transaction', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'index'])->name('van_selling_os_transaction');
+Route::post('/van_selling_os_transaction_proceed', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_os_transaction_proceed'])->name('van_selling_os_transaction_proceed');
 
 
 

@@ -1,6 +1,6 @@
 @if (count($van_selling_os_data) != 0)
     <div class="table table-responsive" id="printableArea">
-        <table class="table table-bordered table-sm" id="export_table">
+        <table class="table table-bordered table-sm table-striped" id="export_table">
             <thead>
                 <tr>
                     <th>{{ $full_name }}</th>

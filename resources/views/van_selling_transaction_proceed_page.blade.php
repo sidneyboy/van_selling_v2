@@ -189,7 +189,8 @@
                     </tr>
                     <tr>
                         <th colspan="3">BO AMOUNT:</th>
-                        <th><input type="text" class="form-control form-control-sm" style="text-align: center;" onkeypress="return isNumberKey(event)" name="bo_amount" required>
+                        <th><input type="text" class="form-control form-control-sm" style="text-align: center;"
+                                onkeypress="return isNumberKey(event)" name="bo_amount" required>
                         </th>
                     </tr>
                 </tfoot>
@@ -200,7 +201,7 @@
 
 
     <br />
-    <input type="hidden" value="{{ $customer_selection }}" name="customer_selection">
+    <input type="hidden" value="{{ $customer_selection }}" name="customer_selection" id="customer_selection">
     <button class="btn btn-block btn-info" type="submit">Proceed</button>
 </form>
 
@@ -214,6 +215,64 @@
 
         return true;
     }
+
+    $("#unproductive_button").click(function() {
+        // alert($('#store_name').val());
+        $('.loading').show();
+        var store_name = $('#store_name').val();
+        var location = $('#location').val();
+        var store_type = $('#store_type').val();
+        var barangay = $('#barangay').val();
+        var address = $('#address').val();
+        var customer_selection = $('#customer_selection').val();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, set as Unproductive!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post({
+                    type: "POST",
+                    url: "/van_selling_transaction_unproductive_process",
+                    data: 'store_name=' + store_name + '&location=' + location +
+                        '&store_type=' + store_type + '&barangay=' + barangay + '&address=' +
+                        address + '&customer_selection=' + customer_selection,
+                    success: function(data) {
+                        if (data == 'saved') {
+                            $('.loading').hide();
+                            Swal.fire(
+                                'Set!',
+                                'Customer has been set to Unproductive.',
+                                'success'
+                            );
+
+                            window.location.replace('van_selling_customer_list');
+                        } else {
+                            $('.loading').hide();
+                            Swal.fire(
+                                'Error',
+                                'Fill Up Customer Data First!',
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(error) {
+                        $('.loading').hide();
+                        Swal.fire(
+                            'Cannot Proceed',
+                            'Please Contact IT Support',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+    });
 
     $("#van_selling_transaction_summary").on('submit', (function(e) {
         e.preventDefault();

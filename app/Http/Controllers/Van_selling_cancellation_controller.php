@@ -24,7 +24,7 @@ class Van_selling_cancellation_controller extends Controller
         $date_from = date('Y-m-d',strtotime($var[0]));
         $date_to = date('Y-m-d',strtotime($var[1]));
 
-        $van_selling_cancellation = Van_selling_cancellation::whereBetween('date',[$date_from, $date_to])->get();
+        $van_selling_cancellation = Van_selling_cancellation::whereBetween('date',[$date_from, $date_to])->orderBy('id','desc')->get();
 
         return view('van_selling_cancellation_generate_page',[
         	'van_selling_cancellation' => $van_selling_cancellation,

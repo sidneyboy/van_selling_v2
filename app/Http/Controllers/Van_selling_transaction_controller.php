@@ -19,6 +19,7 @@ use App\Models\Vs_upload_inventory;
 use App\Models\Vs_os_inventories;
 use App\Models\Vs_cart;
 use App\Models\Vs_os_cart;
+use App\Models\Vs_os;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -181,7 +182,6 @@ class Van_selling_transaction_controller extends Controller
         date_default_timezone_set('Asia/Manila');
         $date = date('Y-m-d');
 
-        $van_selling_os_data_code = uniqid();
 
         if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
             $van_selling_customer = new Van_selling_customer([
@@ -195,28 +195,27 @@ class Van_selling_transaction_controller extends Controller
             $van_selling_customer->save();
         }
 
-        $van_selling_transaction_save = new Van_selling_transaction([
-            'delivery_receipt' => $request->input('delivery_receipt'),
-            'store_name' => $request->input('store_name'),
-            'store_type' => $request->input('store_type'),
-            'total_amount' => $request->input('total_amount'),
-            'full_address' => $request->input('location_id'),
-            'status' => 'PAID',
-            'pcm_number' => $request->input('pcm_number'),
-            'bo_amount' => $request->input('bo_amount'),
-            'date' => $date,
-            'remarks' => $request->input('date_time'),
-            'address' => $request->input('address'),
-            'barangay' => $request->input('barangay'),
-        ]);
+        if ($request->input('total_amount') != 0) {
+            $van_selling_transaction_save = new Van_selling_transaction([
+                'delivery_receipt' => $request->input('delivery_receipt'),
+                'store_name' => $request->input('store_name'),
+                'store_type' => $request->input('store_type'),
+                'total_amount' => $request->input('total_amount'),
+                'full_address' => $request->input('location_id'),
+                'status' => 'PAID',
+                'pcm_number' => $request->input('pcm_number'),
+                'bo_amount' => $request->input('bo_amount'),
+                'date' => $date,
+                'remarks' => $request->input('date_time'),
+                'address' => $request->input('address'),
+                'barangay' => $request->input('barangay'),
+            ]);
 
-        $van_selling_transaction_save->save();
+            $van_selling_transaction_save->save();
 
-        $van_selling_cart_data = Vs_cart::all();
+            $van_selling_cart_data = Vs_cart::all();
 
-        foreach ($van_selling_cart_data as $key => $data) {
-            if ($data->quantity != 0) {
-
+            foreach ($van_selling_cart_data as $key => $data) {
                 $van_selling_transaction_details_save = new Van_selling_transaction_details([
                     'van_selling_trans_id' => $van_selling_transaction_save->id,
                     'description' => $data->description,
@@ -231,34 +230,57 @@ class Van_selling_transaction_controller extends Controller
 
                 $van_selling_transaction_details_save->save();
 
-                $van_selling_upload_ledger = new Van_selling_upload_ledger([
+                $sku_ledger = Vs_upload_inventory::where('sku_code', $data->sku_code)->latest()->first();
+
+                $new_vs_inventory = new Vs_upload_inventory([
                     'store_name' => $request->input('store_name'),
-                    'principal' =>  $data->principal,
-                    'sku_code' => $data->sku_code,
-                    'description' => $data->description,
-                    'unit_of_measurement' => $data->unit_of_measurement,
-                    'sku_type' => $data->sku_type,
-                    'butal_equivalent' => $data->butal_equivalent,
+                    'principal' =>  $sku_ledger->principal,
+                    'sku_code' => $sku_ledger->sku_code,
+                    'description' => $sku_ledger->description,
+                    'unit_of_measurement' => $sku_ledger->unit_of_measurement,
+                    'sku_type' => $sku_ledger->sku_type,
+                    'butal_equivalent' => $sku_ledger->butal_equivalent,
                     'reference' => $request->input('delivery_receipt'),
-                    'beg' => $data->beg,
-                    'van_load' => 0,
-                    'sales' => $data->quantity * -1,
-                    'adjustments' => 0,
-                    'end' => $data->beg - $data->quantity,
+                    'quantity' => $data->quantity,
+                    'running_balance' => $sku_ledger->running_balance - $data->quantity,
                     'unit_price' => $data->price,
                     'date' => $date,
-                    'status' => '',
-                    'status_cancel' => '',
                 ]);
 
-                $van_selling_upload_ledger->save();
+                $new_vs_inventory->save();
             }
         }
+
+        $van_sellling_os_cart_data = Vs_os_cart::all();
+        if ($van_sellling_os_cart_data) {
+            $van_selling_os_data_code = uniqid();
+            foreach ($van_sellling_os_cart_data as $key_2 => $os_data) {
+                $new_os_data = new Vs_os([
+                    'store_name' => $request->input('store_name'),
+                    'sku_code' => $os_data->sku_code,
+                    'quantity' => $os_data->quantity,
+                    'os_code' => $van_selling_os_data_code,
+                    'date' => $date,
+                ]);
+
+                $new_os_data->save();
+            }
+        }
+
+        $new_calls = new Van_selling_calls([
+            'store_name' => $request->input('store_name'),
+            'location_id' => $request->input('location_id'),
+            'address' => $request->input('address'),
+            'date' => $date,
+            'remarks' => $request->input('remarks'),
+        ]);
+
+        $new_calls->save();
     }
 
     public function van_selling_transaction_unproductive_process(Request $request)
     {
-
+        //return $request->input();
         date_default_timezone_set('Asia/Manila');
         $date = date('Y-m-d');
 
@@ -267,6 +289,7 @@ class Van_selling_transaction_controller extends Controller
         $location = $request->input('location');
         $barangay = $request->input('barangay');
         $address = $request->input('address');
+
 
 
         if (!isset($store_name)) {
@@ -295,7 +318,7 @@ class Van_selling_transaction_controller extends Controller
 
         $new = new Van_selling_calls([
             'store_name' => $store_name,
-            'location_id' => $location_data,
+            'location_id' => $location_id,
             'address' => $address,
             'date' => $date,
             'remarks' => 'UNPRODUCTIVE',
@@ -303,17 +326,17 @@ class Van_selling_transaction_controller extends Controller
 
         $new->save();
 
-        $van_selling_customer = new Van_selling_customer([
-            'store_name' => strtoupper(str_replace(',', '', $store_name)),
-            'store_type' => $request->input('store_type'),
-            'address' => strtoupper(str_replace(',', '', $address)),
-            'location_id' => $location_id,
-            'barangay' => strtoupper(str_replace(',', '', $barangay)),
-        ]);
+        if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
+            $van_selling_customer = new Van_selling_customer([
+                'store_name' => strtoupper(str_replace(',', '', $store_name)),
+                'store_type' => $request->input('store_type'),
+                'address' => strtoupper(str_replace(',', '', $address)),
+                'location_id' => $location_id,
+                'barangay' => strtoupper(str_replace(',', '', $barangay)),
+            ]);
 
-
-
-        $van_selling_customer->save();
+            $van_selling_customer->save();
+        }
 
         return 'saved';
     }

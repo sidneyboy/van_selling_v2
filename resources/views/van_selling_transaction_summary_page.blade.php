@@ -73,87 +73,99 @@
             </tr>
         </table>
         <br / style="background-color:white">
-        <table>
-            <thead>
-                <tr>
-                    <th>Desc</th>
-                    <th>Qty</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($cart as $data)
-                    @if ($data->quantity != 0)
-                        <tr>
-                            <th>{{ $data->sku_code }} <br />{{ $data->description }}<br /> x {{ $data->quantity }}
-                            </th>
-                            <th style="text-align: right">{{ number_format($data->price, 2, '.', ',') }}</th>
-                            <th style="text-align: right">
-                                @php
-                                    $total = $data->price * $data->quantity;
-                                    $sum_total[] = $total;
-                                    echo number_format($total, 2, '.', ',');
-                                @endphp
-                                <input type="hidden" name="amount[{{ $data->sku_code }}]"
-                                    value="{{ $total }}">
-                            </th>
-                        </tr>
-                    @endif
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>TOTAL:</th>
-                    <th></th>
-                    <th style="text-align: right;">
-                        {{ number_format(array_sum($sum_total), 2, '.', ',') }}
-                    </th>
-                </tr>
-                <tr>
-                    <th>PCM #:</th>
-                    <th></th>
-                    <th style="text-align: right">
-                        {{ $pcm_number }}
-                        <input type="hidden" name="pcm_number" value="{{ $pcm_number }}">
-                    </th>
-                </tr>
-                <tr>
-                    <th>BO AMOUNT:</th>
-                    <th></th>
-                    <th style="text-align: right;">-{{ number_format($bo_amount, 2, '.', ',') }}
-                        <input type="hidden" name="bo_amount" value="{{ $bo_amount }}">
-                    </th>
-                </tr>
-                <tr>
-                    <th>GRAND TOTAL:</th>
-                    <th></th>
-                    <th style="text-align: center;">
-                        {{ number_format(array_sum($sum_total) - $bo_amount, 2, '.', ',') }}
-                        <input type="hidden" name="total_amount" value="{{ array_sum($sum_total) - $bo_amount }}">
-                    </th>
-                </tr>
-                <tr>
-                    <td colspan="3">&nbsp;</td>
-                </tr>
-                <tr>
-                    <th colspan="3">Received by:</th>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <div class="wrapper">
-                            <canvas id="signature-pad" style="border:dotted;width:100%;height:150px;"
-                                class="signature-pad"></canvas>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+        @if (count($cart) != 0)
+            <table>
+                <thead>
+                    <tr>
+                        <th>Desc</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cart as $data)
+                        @if ($data->quantity != 0)
+                            <tr>
+                                <th>{{ $data->sku_code }} <br />{{ $data->description }}<br /> x
+                                    {{ $data->quantity }}
+                                </th>
+                                <th style="text-align: right">{{ number_format($data->price, 2, '.', ',') }}</th>
+                                <th style="text-align: right">
+                                    @php
+                                        $total = $data->price * $data->quantity;
+                                        $sum_total[] = $total;
+                                        echo number_format($total, 2, '.', ',');
+                                    @endphp
+                                    <input type="hidden" name="amount[{{ $data->sku_code }}]"
+                                        value="{{ $total }}">
+                                </th>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>TOTAL:</th>
+                        <th></th>
+                        <th style="text-align: right;">
+                            {{ number_format(array_sum($sum_total), 2, '.', ',') }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>PCM #:</th>
+                        <th></th>
+                        <th style="text-align: right">
+                            {{ $pcm_number }}
+                            <input type="hidden" name="pcm_number" value="{{ $pcm_number }}">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>BO AMOUNT:</th>
+                        <th></th>
+                        <th style="text-align: right;">-{{ number_format($bo_amount, 2, '.', ',') }}
+                            <input type="hidden" name="bo_amount" value="{{ $bo_amount }}">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>GRAND TOTAL:</th>
+                        <th></th>
+                        <th style="text-align: right;">
+                            {{ number_format(array_sum($sum_total) - $bo_amount, 2, '.', ',') }}
+                            <input type="hidden" name="total_amount" value="{{ array_sum($sum_total) - $bo_amount }}">
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">Received by:</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="wrapper">
+                                <canvas id="signature-pad" style="border:dotted;width:100%;height:150px;"
+                                    class="signature-pad"></canvas>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <input type="hidden" value="{{ $customer_selection }}" name="customer_selection">
+            <input type="hidden" name="remarks" value="PRODUCTIVE">
+            <input type="button" value="Screenshot" class="btn btn-info btn-block" id="btnConvert">
+            <div id="previewImg"></div>
+            <input type="hidden" id="download_button_counter" value="1">
+            <button type="submit" class="btn btn-success btn-block" id="submit" style="display: none;">Submit</button>
+        @else
+            <input type="hidden" value="{{ $customer_selection }}" name="customer_selection">
+            <input type="hidden" name="remarks" value="UNPRODUCTIVE">
+            <center>
+                <h1 style="color:red;">UNPRODUCTIVE</h1>
+            </center>
+            <button type="submit" id="submit" class="btn btn-success btn-block">Submit</button>
+        @endif
 
-        {{-- <input type="button" value="CONVERT TO IMAGE AND SUBMIT" class="btn btn-info btn-block" id="btnConvert"> --}}
-        <input type="hidden" value="{{ $customer_selection }}" name="customer_selection">
-        <button type="submit" class="btn btn-success btn-block">Submit</button>
-        {{-- <div id="previewImg"></div>
-        <input type="hidden" id="download_button_counter" value="1"> --}}
+
     </form>
 </div>
 
@@ -165,7 +177,7 @@
 <script type="text/javascript">
     $("#van_selling_transaction_summary_save").on('submit', (function(e) {
         e.preventDefault();
-        //$('.loading').show();
+        $('.loading').show();
         $.ajax({
             url: "van_selling_transaction_summary_save",
             type: "POST",
@@ -174,17 +186,19 @@
             cache: false,
             processData: false,
             success: function(data) {
-                // Swal.fire({
-                //     position: 'top-end',
-                //     icon: 'success',
-                //     title: 'Your work has been saved',
-                //     showConfirmButton: false,
-                //     timer: 1500
-                // });
+                $('.loading').hide();
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
-                // location.reload();
+                location.reload();
             },
             error: function(error) {
+                $('.loading').hide();
                 Swal.fire(
                     'Cannot Proceed',
                     'Please Contact IT Support',
@@ -195,7 +209,7 @@
     }));
 
     $("#btnConvert").on('click', function() {
-        // $('.loading').show();
+        $('.loading').show();
         html2canvas(document.getElementById("html-content-holder")).then(function(canvas) {
             var anchorTag = document.createElement("a");
             document.body.appendChild(anchorTag);
@@ -206,15 +220,10 @@
             anchorTag.click();
             $('#previewImg').hide();
             $('#btnConvert').hide();
-            $('#submit').click();
+            $('#submit').show();
             $('.loading').hide();
         });
     });
-
-    // $("#submit").on('click', (function(e) {
-    //     $('.loading').show();
-    // }));
-
 
     var canvas = document.getElementById('signature-pad');
 

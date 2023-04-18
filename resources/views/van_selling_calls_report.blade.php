@@ -1,69 +1,63 @@
 @if (count($van_selling_calls) != 0)
-    <div class="table table-responsive" id="printableArea">
-        <table class="table table-bordered table-hovered" id="export_table">
-            <thead>
-                <tr>
-                    <th>{{ $full_name }}</th>
-                    <th>{{ $user_id }}</th>
-                    <th>CALLS REPORT</th>
-                    <th>DATE RANGE: {{ $date_from . ' - ' . $date_to }}</th>
-                </tr>
-                <tr>
-                    <th>STORE NAME</th>
-                    <th>ADDRESS</th>
-                    <th>DATE</th>
-                    <th>REMARKS</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($van_selling_calls as $data)
+    <form action="van_selling_calls_report_export" method="post">
+        <div class="table table-responsive" id="printableArea">
+            <table class="table table-bordered table-hovered table-sm table-striped" id="export_table">
+                <thead>
                     <tr>
-                        <td>{{ strtoupper(str_replace(',', '', $data->store_name)) }}</td>
-                        <td>{{ $data->address }}</td>
-                        <td>{{ $data->date }}</td>
-                        <td>
-                              {{ $data->remarks }}
-                        </td>
+                        <th>PRODUCTIVE CALLS</th>
+                        <th></th>
+                        <th></th>
+                        <th>{{ $van_selling_productive_calls }}</th>
                     </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>SUMMARY</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th>PRODUCTIVE CALLS</th>
-                    <th></th>
-                    <th></th>
-                    <th>{{ $van_selling_productive_calls }}</th>
-                </tr>
-                <tr>
-                    <th>UNPRODUCTIVE CALLS</th>
-                    <th></th>
-                    <th></th>
-                    <th>{{ $van_selling_unproductive_calls }}</th>
-                </tr>
-                <tr>
-                    <th>TOTAL CALLS</th>
-                    <th></th>
-                    <th></th>
-                    <th>{{ $van_selling_productive_calls + $van_selling_unproductive_calls }}</th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-block btn-success"
-                onclick="exportTableToCSV('OS REPORT {{ strtoupper($full_name) . ' ' . $date_from . ' - ' . $date_to }}.csv')">EXPORT
-                TABLE DATA</button>
+                    <tr>
+                        <th>UNPRODUCTIVE CALLS</th>
+                        <th></th>
+                        <th></th>
+                        <th>{{ $van_selling_unproductive_calls }}</th>
+                    </tr>
+                    <tr>
+                        <th>TOTAL CALLS</th>
+                        <th></th>
+                        <th></th>
+                        <th>{{ $van_selling_productive_calls + $van_selling_unproductive_calls }}</th>
+                    </tr>
+                    <tr>
+                        <th>{{ $full_name }}</th>
+                        <th>{{ $user_id }}</th>
+                        <th>CALLS REPORT</th>
+                        <th>DATE RANGE: {{ $date_from . ' - ' . $date_to }}</th>
+                    </tr>
+                    <tr>
+                        <th>STORE NAME</th>
+                        <th>ADDRESS</th>
+                        <th>DATE</th>
+                        <th>REMARKS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($van_selling_calls as $data)
+                        <tr>
+                            <td>{{ strtoupper(str_replace(',', '', $data->store_name)) }}</td>
+                            <td>{{ $data->address }}</td>
+                            <td>{{ $data->date }}</td>
+                            <td>
+                                {{ $data->remarks }}
+                                <input type="hidden" name="id[]" value="{{ $data->id }}">
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-block btn-success" onclick="exportTableToCSV('OS REPORT {{ strtoupper($full_name) . ' ' . $date_from . ' - ' . $date_to }}.csv')" type="submit">EXPORT
+                    TABLE DATA</button>
+            </div>
+        </div>
+
+    </form>
 @endif
 <script type="text/javascript">
     function printDiv(divName) {

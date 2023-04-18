@@ -42,6 +42,11 @@ class Van_selling_customer_list_controller extends Controller
 
 	public function van_selling_customer_edit_process(Request $request)
 	{
+		$validatedData = $request->validate([
+			'latitude' => ['required'],
+			'longitude' => ['required'],
+		]);
+
 		Van_selling_customer::where('id', $request->input('id'))
 			->update([
 				'contact_person' => strtoupper($request->input('contact_person')),
