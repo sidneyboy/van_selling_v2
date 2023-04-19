@@ -91,7 +91,7 @@
                                              @if ($details->remarks != 'EXPORTED')
                                                  <tr>
                                                      <td>
-                                                         {{ $data->remarks }}
+                                                         {{ str_replace(',','',$data->remarks) }}
                                                          <input type="hidden" name="details_id[]"
                                                              value="{{ $details->id }}">
                                                      </td>
