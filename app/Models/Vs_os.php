@@ -18,4 +18,9 @@ class Vs_os extends Model
         'date',
         'status',
     ];
+
+    public function sku()
+    {
+      return $this->belongsTo('App\Models\Vs_os_inventories', 'sku_code','sku_code');
+    }
 }

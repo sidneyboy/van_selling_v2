@@ -247,7 +247,8 @@ Route::get('/van_selling_barangay_geo_tag', [App\Http\Controllers\Van_selling_cu
 
 Route::get('/van_selling_os_transaction', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'index'])->name('van_selling_os_transaction');
 Route::post('/van_selling_os_transaction_proceed', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_os_transaction_proceed'])->name('van_selling_os_transaction_proceed');
-
+Route::post('/van_selling_os_transaction_summary', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_os_transaction_summary'])->name('van_selling_os_transaction_summary');
+Route::post('/van_selling_os_transaction_final_summary', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_os_transaction_final_summary'])->name('van_selling_os_transaction_final_summary');
 
 
 

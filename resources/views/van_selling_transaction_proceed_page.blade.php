@@ -183,12 +183,12 @@
                         <th colspan="4">BO DEDUCTION</th>
                     </tr>
                     <tr>
-                        <th colspan="3">PCM NO:</th>
+                        <th colspan="3">PCM No:</th>
                         <th><input type="text" style="text-align: center;" name="pcm_number"
                                 class="form-control form-control-sm" required></th>
                     </tr>
                     <tr>
-                        <th colspan="3">BO AMOUNT:</th>
+                        <th colspan="3">BO Amount:</th>
                         <th><input type="text" class="form-control form-control-sm" style="text-align: center;"
                                 onkeypress="return isNumberKey(event)" name="bo_amount" required>
                         </th>
@@ -197,8 +197,6 @@
             </table>
         </div>
     @endif
-
-
 
     <br />
     <input type="hidden" value="{{ $customer_selection }}" name="customer_selection" id="customer_selection">

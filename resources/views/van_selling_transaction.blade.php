@@ -139,7 +139,7 @@
 
         $("#van_selling_transaction_proceed").on('submit', (function(e) {
             e.preventDefault();
-            //$('.loading').show();
+            $('.loading').show();
             // $('#hide_if_trigger').hide();
             $.ajax({
                 url: "van_selling_transaction_proceed",
@@ -150,6 +150,7 @@
                 processData: false,
                 success: function(data) {
                     if (data == 'Insufficient') {
+                        $('.loading').hide();
                         Swal.fire(
                             'Cannot Proceed',
                             'Insufficient Quantity',
