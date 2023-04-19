@@ -942,3 +942,602 @@ if (is_null($request->input('cart_id'))) {
             ->with('location', strtoupper($request->input('location_data')))
             ->with('store_name', strtoupper($request->input('store_name')))
             ->with('store_type', strtoupper($request->input('store_type')));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <style type="text/css">
+    .wrapper {
+        position: relative;
+        height: 200px;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .signature-pad {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 200px;
+        background-color: white;
+    }
+</style>
+
+
+
+
+@if (count($van_selling_os_cart_details) != 0)
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th colspan="4" style="text-align: center;">OUT OF STOCK</th>
+            </tr>
+            <tr>
+                <th>SKU</th>
+                <th>QUANTITY</th>
+                <th>U/P</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($van_selling_os_cart_details as $data)
+                <tr>
+                    <th>
+                        {{ $data->van_selling_os_sku->sku_code }} <br />
+                        {{ $data->van_selling_os_sku->description }}
+                    </th>
+                    <th style="text-align: right">{{ $data->quantity }}</th>
+                    <th style="text-align: right">{{ $data->unit_price }}</th>
+                    <th style="text-align: right">
+                        @php
+                            $sum_cart_os_total[] = $data->unit_price * $data->quantity;
+                        @endphp
+
+                        {{ number_format($data->unit_price * $data->quantity, 2, '.', ',') }}
+                    </th>
+                </tr>
+            @endforeach
+            <tr>
+                <th colspan="3">TOTAL</th>
+                <th style="text-align: right">
+                    {{ number_format(array_sum($sum_cart_os_total), 2, '.', ',') }}
+                </th>
+            </tr>
+        </tbody>
+    </table>
+@endif
+
+@if (count($van_selling_cart_os_data) != 0)
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th colspan="4" style="text-align:center;">SERVED OS</th>
+            </tr>
+            <tr>
+                <th>SKU</th>
+                <th>QUANTITY</th>
+                <th>U/P</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($van_selling_cart_os_data as $data)
+                <tr>
+                    <th>
+                        {{ $data->sku_code }} <br />
+                        {{ $data->description }}
+                    </th>
+                    <th style="text-align: right">{{ $data->quantity }}</th>
+                    <th style="text-align: right">{{ $data->price }}</th>
+                    <th style="text-align: right">
+                        @php
+                            $sum_os_data_total[] = $data->price * $data->quantity;
+                        @endphp
+
+                        {{ number_format($data->price * $data->quantity, 2, '.', ',') }}
+                    </th>
+                </tr>
+            @endforeach
+            <tr>
+                <th colspan="3">TOTAL</th>
+                <th style="text-align: right">
+                    {{ number_format(array_sum($sum_os_data_total), 2, '.', ',') }}
+                </th>
+            </tr>
+        </tbody>
+    </table>
+@endif
+
+<div id="html-content-holder">
+
+    <form method="post" action="{{ route('van_selling_transaction_summary_save') }}" accept-charset="UTF-8">
+        @if (count($van_selling_cart_data) != 0)
+            <table class="table table-borderless" style="font-size:30px;font-family: Arial, Helvetica, sans-serif;"
+                id="print_table">
+                <thead>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">JULMAR COMMERCIAL INC.</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">OSMENA ST., CDO</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">TEL 857-6197, 858-5771</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">Vat Reg. TIN 486-701-947-000</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">REP: {{ $full_name }}</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">
+                                Store: {{ $store_name }}
+                                <input type="hidden" name="store_name" value="{{ $store_name }}">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">
+                                <input type="hidden" name="store_type" value="{{ $store_type }}">
+                                <input type="hidden" name="location" value="{{ $location }}">
+                                <input type="hidden" name="barangay" value="{{ $barangay }}">
+                                <input type="hidden" name="address" value="{{ $address }}">
+                                @if (count($van_selling_cart_os_data) != 0)
+                                    <input type="hidden" name="van_selling_os_cart_data" value="true">
+                                @else
+                                    <input type="hidden" name="van_selling_os_cart_data" value="false">
+                                @endif
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">
+                                DR: {{ $delivery_receipt }}
+                                <input type="hidden" name="delivery_receipt" value="{{ $delivery_receipt }}">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;" colspan="3">
+                                Date & Time: {{ $date . ' | ' . $time }}
+                                <input type="hidden" name="date_time" value="{{ $date . ' | ' . $time }}">
+                            </th>
+                        </tr>
+                        <tr>
+                            <td colspan="3">&nbsp;</td>
+                        </tr>
+                    
+                    <tr>
+                        <th>SKU</th>
+                        <th>U/P</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($van_selling_cart_data as $data)
+                        @if ($data->quantity != 0)
+                            <tr>
+                                <th>[{{ $data->sku_code }}] {{ $data->description }} x {{ $data->quantity }}</th>
+                                <th style="text-align: right">{{ $data->price }}</th>
+                                <th style="text-align: right">
+                                    @php
+                                        $total = $data->price * $data->quantity;
+                                        $sum_total[] = $total;
+                                        echo number_format($total, 2, '.', ',');
+                                    @endphp
+                                    <input type="hidden" name="amount[{{ $data->sku_code }}]"
+                                        value="{{ $total }}">
+                                </th>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>TOTAL:</th>
+                        <th></th>
+                        <th style="text-align: right;">
+                            {{ number_format(array_sum($sum_total), 2, '.', ',') }}
+
+                            <input type="hidden" name="van_selling_cart_data" value="{{ $van_selling_cart_data }}">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>PCM #:</th>
+                        <th></th>
+                        <th style="text-align: right">
+                            {{ $pcm_number }}
+                            <input type="hidden" name="pcm_number" value="{{ $pcm_number }}">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>BO AMOUNT:</th>
+                        <th></th>
+                        <th style="text-align: right;">-{{ number_format($bo_amount, 2, '.', ',') }}
+                            <input type="hidden" name="bo_amount" value="{{ $bo_amount }}">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>GRAND TOTAL:</th>
+                        <th></th>
+                        <th style="text-align: center;">
+                            {{ number_format(array_sum($sum_total) - $bo_amount, 2, '.', ',') }}
+                            <input type="hidden" name="total_amount" value="{{ array_sum($sum_total) - $bo_amount }}">
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">Received by:</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="wrapper">
+                                <canvas id="signature-pad" style="border:dotted;width:100%;height:150px;"
+                                    class="signature-pad"></canvas>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <input type="hidden" name="customer_selection" value="{{ $customer_selection }}">
+            <button type="submit" id="submit" class="btn btn-success btn-block"
+                style="display: none;">SUBMIT</button>
+        @else
+            <input type="hidden" name="store_type" value="{{ $store_type }}">
+            <input type="hidden" name="location" value="{{ $location }}">
+            <input type="hidden" name="barangay" value="{{ $barangay }}">
+            <input type="hidden" name="address" value="{{ $address }}">
+            <input type="hidden" name="store_name" value="{{ $store_name }}">
+            <input type="hidden" name="total_amount" value="0">
+            <button type="submit" id="submit" class="btn btn-success btn-block"
+                style="display: none;">SUBMIT</button>
+
+        @endif
+    </form>
+
+    <br />
+    <input type="button" value="CONVERT TO IMAGE AND SUBMIT" class="btn btn-info btn-block" id="btnConvert">
+    <div id="previewImg"></div>
+    <input type="hidden" id="download_button_counter" value="1">
+</div>
+
+
+<script type="text/javascript">
+    $("#btnConvert").on('click', function() {
+        $('.loading').show();
+        html2canvas(document.getElementById("html-content-holder")).then(function(canvas) {
+            var anchorTag = document.createElement("a");
+            document.body.appendChild(anchorTag);
+            document.getElementById("previewImg").appendChild(canvas);
+            anchorTag.download = "{{ $store_name . ' ' . uniqid() }}.jpg";
+            anchorTag.href = canvas.toDataURL();
+            anchorTag.target = '_blank';
+            anchorTag.click();
+            $('#previewImg').hide();
+            $('#btnConvert').hide();
+            $('#submit').click();
+            $('.loading').hide();
+        });
+    });
+
+    $("#submit").on('click', (function(e) {
+        $('.loading').show();
+    }));
+</script>
+
+<script src="{{ asset('js/signature_pad.umd.js') }}"></script>
+<script src="{{ asset('js/app2.js') }}"></script>
+<script type="text/javascript">
+    var canvas = document.getElementById('signature-pad');
+    // Adjust canvas coordinate space taking into account pixel ratio,
+    // to make it look crisp on mobile devices.
+    // This also causes canvas to be cleared.
+    function resizeCanvas() {
+        // When zoomed out to less than 100%, for some very strange reason,
+        // some browsers report devicePixelRatio as less than 1
+        // and only part of the canvas is cleared then.
+        var ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+    }
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+    var signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+    });
+    document.getElementById('save-png').addEventListener('click', function() {
+        if (signaturePad.isEmpty()) {
+            return alert("Please provide a signature first.");
+        }
+        var data = signaturePad.toDataURL('image/png');
+        console.log(data);
+        window.open(data);
+    });
+    document.getElementById('save-jpeg').addEventListener('click', function() {
+        if (signaturePad.isEmpty()) {
+            return alert("Please provide a signature first.");
+        }
+        var data = signaturePad.toDataURL('image/jpeg');
+        console.log(data);
+        window.open(data);
+    });
+    document.getElementById('save-svg').addEventListener('click', function() {
+        if (signaturePad.isEmpty()) {
+            return alert("Please provide a signature first.");
+        }
+        var data = signaturePad.toDataURL('image/svg+xml');
+        console.log(data);
+        console.log(atob(data.split(',')[1]));
+        window.open(data);
+    });
+    document.getElementById('clear').addEventListener('click', function() {
+        signaturePad.clear();
+    });
+    document.getElementById('draw').addEventListener('click', function() {
+        var ctx = canvas.getContext('2d');
+        console.log(ctx.globalCompositeOperation);
+        ctx.globalCompositeOperation = 'source-over'; // default value
+    });
+    document.getElementById('erase').addEventListener('click', function() {
+        var ctx = canvas.getContext('2d');
+        ctx.globalCompositeOperation = 'destination-out';
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if ($request->input('total_amount') != 0) {
+            //return 'asdasd';
+            if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
+                $van_selling_customer = new Van_selling_customer([
+                    'store_name' => $request->input('store_name'),
+                    'store_type' => $request->input('store_type'),
+                    'address' => $request->input('address'),
+                    'location_id' => $location_id,
+                    'barangay' => $request->input('barangay'),
+                ]);
+
+                $van_selling_customer->save();
+            }
+
+            $van_selling_transaction_save = new Van_selling_transaction([
+                'delivery_receipt' => $request->input('delivery_receipt'),
+                'store_name' => $request->input('store_name'),
+                'store_type' => $request->input('store_type'),
+                'total_amount' => $request->input('total_amount'),
+                'full_address' => $location_id,
+                'status' => 'PAID',
+                'pcm_number' => $request->input('pcm_number'),
+                'bo_amount' => $request->input('bo_amount'),
+                'date' => $date,
+                'remarks' => $request->input('date_time'),
+                'address' => $request->input('address'),
+                'barangay' => $request->input('barangay'),
+            ]);
+
+            $van_selling_transaction_save->save();
+
+            $van_selling_cart_data = Van_selling_transaction_cart_details::all();
+
+            foreach ($van_selling_cart_data as $key => $data) {
+                if ($data->quantity != 0) {
+
+                    $van_selling_transaction_details_save = new Van_selling_transaction_details([
+                        'van_selling_trans_id' => $van_selling_transaction_save->id,
+                        'description' => $data->description,
+                        'principal' => $data->principal,
+                        'sku_code' => $data->sku_code,
+                        'quantity' => $data->quantity,
+                        'price' => $data->price,
+                        'amount' => $request->input('amount')[$data->sku_code],
+                        'status' => '',
+                        'remarks' => '',
+                    ]);
+
+                    $van_selling_transaction_details_save->save();
+
+                    $van_selling_upload_ledger = new Van_selling_upload_ledger([
+                        'store_name' => $request->input('store_name'),
+                        'principal' =>  $data->principal,
+                        'sku_code' => $data->sku_code,
+                        'description' => $data->description,
+                        'unit_of_measurement' => $data->unit_of_measurement,
+                        'sku_type' => $data->sku_type,
+                        'butal_equivalent' => $data->butal_equivalent,
+                        'reference' => $request->input('delivery_receipt'),
+                        'beg' => $data->beg,
+                        'van_load' => 0,
+                        'sales' => $data->quantity * -1,
+                        'adjustments' => 0,
+                        'end' => $data->beg - $data->quantity,
+                        'unit_price' => $data->price,
+                        'date' => $date,
+                        'status' => '',
+                        'status_cancel' => '',
+                    ]);
+
+                    $van_selling_upload_ledger->save();
+                }
+            }
+
+            $van_sellling_os_cart_data = Van_selling_os_cart_details::all();
+            if (count($van_sellling_os_cart_data) != 0) {
+                foreach ($van_sellling_os_cart_data as $key_2 => $os_data) {
+                    $new_os_data = new Van_selling_os_data([
+                        'van_selling_inventory_id' => $os_data->van_selling_os_sku->id,
+                        'store_name' =>  $request->input('store_name'),
+                        'sku_code' => $os_data->van_selling_os_sku->sku_code,
+                        'description' => $os_data->van_selling_os_sku->description,
+                        'quantity' => $os_data->quantity,
+                        'principal' => $os_data->van_selling_os_sku->principal,
+                        'date' => $date,
+                        'code' => $van_selling_os_data_code,
+                        'unit_price' => $os_data->unit_price,
+                    ]);
+
+                    $new_os_data->save();
+                }
+            }
+
+            $new_calls = new Van_selling_calls([
+                'store_name' => $request->input('store_name'),
+                'location_id' => $location_data,
+                'address' => $request->input('address'),
+                'date' => $date,
+                'remarks' => 'PRODUCTIVE',
+            ]);
+
+            $new_calls->save();
+        } else {
+            if ($request->input('customer_selection') == 'NEW_CUSTOMER') {
+                $van_selling_customer = new Van_selling_customer([
+                    'store_name' => strtoupper(str_replace(',', '', $request->input('store_name'))),
+                    'store_type' => $request->input('store_type'),
+                    'address' => strtoupper(str_replace(',', '', $request->input('address'))),
+                    'location_id' => $location_id,
+                    'barangay' => strtoupper(str_replace(',', '', $request->input('barangay'))),
+                ]);
+
+                $van_selling_customer->save();
+            }
+
+            $van_sellling_os_cart_data = Van_selling_os_cart_details::all();
+            if (count($van_sellling_os_cart_data) != 0) {
+                foreach ($van_sellling_os_cart_data as $key_2 => $os_data) {
+                    $new_os_data = new Van_selling_os_data([
+                        'van_selling_inventory_id' => $os_data->van_selling_os_sku->id,
+                        'store_name' =>  $request->input('store_name'),
+                        'sku_code' => $os_data->van_selling_os_sku->sku_code,
+                        'description' => $os_data->van_selling_os_sku->description,
+                        'quantity' => $os_data->quantity,
+                        'principal' => $os_data->van_selling_os_sku->principal,
+                        'date' => $date,
+                        'code' => $van_selling_os_data_code,
+                        'unit_price' => $os_data->unit_price,
+                    ]);
+
+                    $new_os_data->save();
+                }
+            }
+
+            $new_calls = new Van_selling_calls([
+                'store_name' => $request->input('store_name'),
+                'location_id' => $location_data,
+                'address' => $request->input('address'),
+                'date' => $date,
+                'remarks' => 'UNPRODUCTIVE',
+            ]);
+
+            $new_calls->save();
+        }
+
+        if ($request->input('van_selling_os_cart_data') == 'true') {
+            $van_selling_os_data_to_update = Van_selling_os_data::select('id', 'temp_quantity', 'temp_unit_price')->where('store_name', $request->input('store_name'))->get();
+
+            foreach ($van_selling_os_data_to_update as $key => $os_data_to_update) {
+                Van_selling_os_data::where('store_name', $request->input('store_name'))
+                    ->where('id', $os_data_to_update->id)
+                    ->update([
+                        'served_quantity' => $os_data_to_update->temp_quantity,
+                        'served_date' => $date,
+                        'served_unit_price' => $os_data_to_update->temp_unit_price,
+                    ]);
+            }
+        }
+
+
+        return redirect()->route('van_selling_transaction_report');
