@@ -110,7 +110,10 @@
                     @foreach ($data->van_selling_transaction_details as $details)
                         <tr>
                             <th>{{ $data->store_name }}</th>
-                            <th>{{ $details->description }} - {{ $details->price }}</th>
+                            <th>
+                                {{$details->sku_code}}<br />
+
+                                {{ $details->description }} <br />  {{ $details->price }}</th>
                             <th style="text-align: right;">{{ $details->quantity }}</th>
                             <th style="text-align: right;">
                                 @php
@@ -177,8 +180,9 @@
                     <tr>
                         <th>{{ $details->van_selling_transaction->store_name }}</th>
                         <th>
-                            {{ $details->description }} - {{ $details->price }}
-                        </th>
+                                {{$details->sku_code}}<br />
+
+                                {{ $details->description }} <br />  {{ $details->price }}</th>
                         <th style="text-align: right;">{{ $details->quantity }}</th>
                         <th style="text-align: right;">
                             @php

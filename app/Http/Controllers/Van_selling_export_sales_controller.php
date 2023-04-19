@@ -29,11 +29,11 @@ class Van_selling_export_sales_controller extends Controller
     public function van_selling_export_sales_update_remarks(Request $request)
     {
     	if (is_null($request->input('details_id'))) {
-    		return redirect('van_selling_transaction_report');
+    		return redirect('van_selling_transaction');
     	}else{
             Van_selling_transaction_details::whereIn('id', $request->input('details_id'))
                     ->update(['remarks' => 'EXPORTED']);
-	    	return redirect('van_selling_transaction_report');
+	    	return redirect('van_selling_transaction');
     	}
 
     	
