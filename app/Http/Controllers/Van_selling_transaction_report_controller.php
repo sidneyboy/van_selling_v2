@@ -102,7 +102,10 @@ class Van_selling_transaction_report_controller extends Controller
 
         foreach ($van_selling_transaction_data as $key => $data) {
             $sku_code = $data->sku_code;
-            $sku_ledger = Vs_upload_inventory::where('sku_code', $data->sku_code)->latest()->first();
+            $sku_ledger = Vs_upload_inventory::where('sku_code', $data->sku_code)
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->first();
 
             $van_selling_cancelation_details = new Van_selling_cancellation_details([
                 'vs_cancelation_id' => $van_selling_cancelation->id,
@@ -116,7 +119,7 @@ class Van_selling_transaction_report_controller extends Controller
 
             $van_selling_cancelation_details->save();
 
-           
+
 
             $new_vs_inventory = new Vs_upload_inventory([
                 'store_name' => $data->van_selling_transaction->store_name,

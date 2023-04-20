@@ -123,7 +123,7 @@
                   timer: 1500
                 })
 
-                window.location.href = "/customer";
+                window.location.href = "/van_selling_upload";
               }else{
                 Swal.fire(
                   'Something went wrong!',

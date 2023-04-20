@@ -195,7 +195,7 @@
                     timer: 1500
                 });
 
-                location.reload();
+                window.location.href = "van_selling_export_sales";
             },
             error: function(error) {
                 $('.loading').hide();

@@ -230,7 +230,10 @@ class Van_selling_transaction_controller extends Controller
 
                 $van_selling_transaction_details_save->save();
 
-                $sku_ledger = Vs_upload_inventory::where('sku_code', $data->sku_code)->latest()->first();
+                $sku_ledger = Vs_upload_inventory::where('sku_code', $data->sku_code)
+                                ->orderBy('id','desc')
+                                ->limit(1)
+                                ->first();
 
                 $new_vs_inventory = new Vs_upload_inventory([
                     'store_name' => $request->input('store_name'),
