@@ -57,7 +57,21 @@ class Van_selling_transaction_controller extends Controller
         //return $request->input();
         $principal = $request->input('principal');
         $sku = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories WHERE principal = '$principal'  GROUP BY sku_code)");
-        $os_sku = Vs_os_inventories::select('sku_code', 'description', 'unit_price')->get();
+
+        if ($sku) {
+            for ($i = 0; $i < count($sku); $i++) {
+                $not_included[] = $sku[$i]->sku_code;
+            }
+            $os_sku = Vs_os_inventories::select('sku_code', 'description', 'unit_price')
+                ->whereNotIn('sku_code', $not_included)
+                ->get();
+        } else {
+            $os_sku = Vs_os_inventories::select('sku_code', 'description', 'unit_price')
+                ->get();
+        }
+
+
+
         return view('van_selling_transaction_show_sku_page', [
             'sku' => $sku,
             'os_sku' => $os_sku,
@@ -77,12 +91,14 @@ class Van_selling_transaction_controller extends Controller
         }
 
         foreach ($sku_quantity as $key => $quantity_data) {
-            $cart_checker = Vs_cart::select('id')->where('sku_code', $key)->count();
-            if ($cart_checker > 0) {
-                Vs_cart::where('id', $cart_checker)
+            $cart_checker = Vs_cart::select('id')->where('sku_code', $key)->first();
+            if ($cart_checker) {
+                Vs_cart::where('id', $cart_checker->id)
                     ->update(['quantity' => $quantity_data]);
             } else {
-                $sku = Vs_upload_inventory::where('sku_code', $key)->latest()->first();
+                $sku = Vs_upload_inventory::where('sku_code', $key)->orderBy('id', 'desc')
+                    ->limit(1)
+                    ->first();
                 $vs_cart = new Vs_cart([
                     'sku_code' => $key,
                     'description' => $sku->description,
@@ -97,9 +113,9 @@ class Van_selling_transaction_controller extends Controller
         }
 
         foreach ($os_quantity as $os_key => $os_quantity) {
-            $os_cart_checker = Vs_os_cart::select('id')->where('sku_code', $os_key)->count();
-            if ($os_cart_checker > 0) {
-                Vs_os_cart::where('id', $os_cart_checker)
+            $os_cart_checker = Vs_os_cart::select('id')->where('sku_code', $os_key)->first();
+            if ($os_cart_checker) {
+                Vs_os_cart::where('id', $os_cart_checker->id)
                     ->update(['quantity' => $os_quantity]);
             } else {
                 $new_os_cart = new Vs_os_cart([
@@ -231,9 +247,9 @@ class Van_selling_transaction_controller extends Controller
                 $van_selling_transaction_details_save->save();
 
                 $sku_ledger = Vs_upload_inventory::where('sku_code', $data->sku_code)
-                                ->orderBy('id','desc')
-                                ->limit(1)
-                                ->first();
+                    ->orderBy('id', 'desc')
+                    ->limit(1)
+                    ->first();
 
                 $new_vs_inventory = new Vs_upload_inventory([
                     'store_name' => $request->input('store_name'),

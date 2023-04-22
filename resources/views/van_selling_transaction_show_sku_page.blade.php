@@ -1,5 +1,7 @@
 <div class="table table-responsive">
-    <table class="table table-bordered table-sm table-striped" style="font-size:13px" id="example2">
+    <table class="table table-bordered table-sm table-striped" style="font-size:13px;height: 10px;
+    overflow: hidden"
+        id="example2">
         <thead>
             <tr>
                 <th>Desc</th>
@@ -19,7 +21,8 @@
                     <td>
                         <input type="number" min="0" style="width:70px;" name="sku_quantity[{{ $data->sku_code }}]"
                             class="form-control form-control-sm">
-                        <input type="hidden" value="{{ $data->running_balance }}" name="running_balance[{{ $data->sku_code }}]">
+                        <input type="hidden" value="{{ $data->running_balance }}"
+                            name="running_balance[{{ $data->sku_code }}]">
                     </td>
                 </tr>
             @endforeach
@@ -30,8 +33,8 @@
                     </td>
                     <td style="text-align: right">0</td>
                     <td style="text-align: right">{{ number_format($os_data->unit_price, 2, '.', ',') }}</td>
-                    <td><input type="number" min="0" style="width:70px;" name="os_quantity[{{ $os_data->sku_code }}]"
-                            class="form-control form-control-sm"></td>
+                    <td><input type="number" min="0" style="width:70px;"
+                            name="os_quantity[{{ $os_data->sku_code }}]" class="form-control form-control-sm"></td>
                 </tr>
             @endforeach
         </tbody>
@@ -47,5 +50,6 @@
         "ordering": false,
         "info": false,
         "autoWidth": false,
+        "scrollY": '300px',
     });
 </script>
