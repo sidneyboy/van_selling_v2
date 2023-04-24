@@ -30,7 +30,7 @@
                  <form id="location_upload">
                      <div class="form-group">
                          <label for="exampleInputFile">File input</label>
-                         <input type="file" name="agent_csv_file" required class="form-control">
+                         <input type="file" name="agent_csv_file" accept=".csv" required class="form-control">
                      </div>
                      <div class="form-group">
 

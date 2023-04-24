@@ -87,7 +87,7 @@ class Van_selling_dsrr_controller extends Controller
                 $id[] = $data->id;
             }
 
-            $van_selling_transaction_details = Van_selling_transaction_details::select('description','quantity','price','van_selling_trans_id')->whereIn('van_selling_trans_id',$id)->where('principal',$request->input('search_for'))->get();
+            $van_selling_transaction_details = Van_selling_transaction_details::select('description','quantity','price','van_selling_trans_id','sku_id','sku_code')->whereIn('van_selling_trans_id',$id)->where('principal',$request->input('search_for'))->get();
 
             return view('van_selling_dsrr_generate_page',[
                             'van_selling_transaction_details' => $van_selling_transaction_details,

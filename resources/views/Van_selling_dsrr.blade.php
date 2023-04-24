@@ -52,7 +52,8 @@
                              <div class="form-group">
                                  <input type="hidden" name="full_name" value="{{ $agent_user->full_name }}">
                                  <input type="hidden" name="user_id" value="{{ $agent_user->user_id }}">
-                                 <button class="btn btn-info btn-block" type="button" id="generate_principal">Proceed</button>
+                                 <button class="btn btn-info btn-block" type="button"
+                                     id="generate_principal">Proceed</button>
                                  <button class="btn btn-success btn-block" id="generate_daily_sales" style="display: none;"
                                      type="submit">Generate Report</button>
                              </div>
@@ -105,7 +106,12 @@
                      }
                  },
                  error: function(error) {
-                     console.log(error);
+                     $('.loading').hide();
+                     Swal.fire(
+                         'Cannot Proceed',
+                         'Please Contact IT Support',
+                         'error'
+                     )
                  }
              });
          });
@@ -134,6 +140,14 @@
                          $('.loading').hide();
                      }
                  },
+                 error: function(error) {
+                     $('.loading').hide();
+                     Swal.fire(
+                         'Cannot Proceed',
+                         'Please Contact IT Support',
+                         'error'
+                     )
+                 }
              });
          }));
      </script>

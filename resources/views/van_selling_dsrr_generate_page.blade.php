@@ -4,19 +4,10 @@
             style="font-size:20px;font-family: Arial, Helvetica, sans-serif;">
             <thead>
                 <tr>
-                    <th colspan="4" style="text-align: center;">JULMAR COMMERCIAL INC.</th>
-                </tr>
-                <tr>
-                    <th colspan="4" style="text-align: center;">Kauswagan Cagayan de Oro City</th>
-                </tr>
-                <tr>
-                    <th colspan="4" style="text-align: center;">DAILY SALES REMITTANCE REPORT</th>
-                </tr>
-                <tr>
-                    <th colspan="4" style="text-align: center;">{{ $full_name }}</th>
-                </tr>
-                <tr>
-                    <th colspan="4" style="text-align: center;">{{ $date_from . ' TO ' . $date_to }}</th>
+                    <th>{{ $full_name }}</th>
+                    <th>DAILY SALES REMITTANCE REPORT</th>
+                    <th>{{ $date_from }}</th>
+                    <th>{{ $date_to }}</th>
                 </tr>
                 <tr>
                     <th>CSI #</th>
@@ -45,19 +36,19 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th style="text-align: center">GROSS::</th>
+                    <th style="text-align: right">GROSS:</th>
                     <th></th>
                     <th></th>
                     <th style="text-align: right;">{{ array_sum($sum_total) }}</th>
                 </tr>
                 <tr>
-                    <th style="text-align: center">TOTAL BO:</th>
+                    <th style="text-align: right">TOTAL BO:</th>
                     <th></th>
                     <th></th>
                     <th style="text-align: right;">({{ array_sum($sum_bo_amount) }})</th>
                 </tr>
                 <tr>
-                    <th style="text-align: center;">TOTAL SALES:</th>
+                    <th style="text-align: right">TOTAL SALES:</th>
                     <th></th>
                     <th></th>
                     <th style="text-align: right;">{{ array_sum($sum_total) - array_sum($sum_bo_amount) }}</th>
@@ -84,19 +75,10 @@
             style="font-size:19px;font-family: Arial, Helvetica, sans-serif;">
             <thead>
                 <tr>
-                    <th colspan="5" style="text-align: center;">JULMAR COMMERCIAL INC.</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">Kauswagan Cagayan de Oro City</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">All Principal</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">{{ $full_name }}</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">FROM {{ $date_from . ' TO ' . $date_to }}</th>
+                    <th>{{ $full_name }}</th>
+                    <th>ALL PRINCIPAL</th>
+                    <th>{{ $date_from }}</th>
+                    <th>{{ $date_to }}</th>
                 </tr>
                 <tr>
                     <th>STORE</th>
@@ -111,8 +93,8 @@
                         <tr>
                             <th>{{ $data->store_name }}</th>
                             <th>
-                                {{$details->sku_code}} <b>({{ $details->sku->sku_type }})</b> <br />
-                                {{ $details->description }} <br />{{ $details->price }}</th>
+                                {{ $details->sku_code }} <b>({{ $details->sku->sku_type }})</b>
+                                {{ $details->description }} x {{ $details->price }}</th>
                             <th style="text-align: right;">{{ $details->quantity }}</th>
                             <th style="text-align: right;">
                                 @php
@@ -153,19 +135,10 @@
             style="font-size:19px;font-family: Arial, Helvetica, sans-serif;">
             <thead>
                 <tr>
-                    <th colspan="5" style="text-align: center;">JULMAR COMMERCIAL INC.</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">Kauswagan Cagayan de Oro City</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">{{ $search_for }}</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">{{ $full_name }}</th>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align: center;">{{ $date_from . ' TO ' . $date_to }}</th>
+                    <th>{{ $full_name }}</th>
+                    <th>{{ $search_for }}</th>
+                    <th>{{ $date_from }}</th>
+                    <th>{{ $date_to }}</th>
                 </tr>
                 <tr>
                     <th>STORE</th>
@@ -179,9 +152,8 @@
                     <tr>
                         <th>{{ $details->van_selling_transaction->store_name }}</th>
                         <th>
-                                {{$details->sku_code}}<br />
-
-                                {{ $details->description }} <br />  {{ $details->price }}</th>
+                            {{ $details->sku_code }} <b>({{ $details->sku->sku_type }})</b>
+                            {{ $details->description }} x {{ $details->price }}</th>
                         <th style="text-align: right;">{{ $details->quantity }}</th>
                         <th style="text-align: right;">
                             @php
@@ -218,7 +190,7 @@
 
 <script type="text/javascript">
     $("#convert").on('click', (function(e) {
-        $('.loading').show();
+        // $('.loading').show();
         var resultDiv = document.getElementById("result");
         html2canvas(document.getElementById("dsrr_table"), {
             onrendered: function(canvas) {
@@ -230,7 +202,7 @@
                 document.getElementById('download_button').click();
 
                 $('#download_button').hide();
-                window.location.replace("{{ route('van_selling_transaction_report') }}");
+                // window.location.replace("{{ route('van_selling_transaction_report') }}");
             }
         });
     }));
@@ -264,7 +236,7 @@
     }
 
     function exportTableToCSV(filename) {
-        $('.loading').show();
+        // $('.loading').show();
         var csv = [];
         var rows = document.querySelectorAll("#dsrr_table tr");
 
@@ -280,6 +252,6 @@
 
         // Download CSV file
         downloadCSV(csv.join("\n"), filename);
-        window.location.replace("{{ route('van_selling_transaction') }}");
+        // window.location.replace("{{ route('van_selling_transaction') }}");
     }
 </script>

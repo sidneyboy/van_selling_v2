@@ -24,7 +24,7 @@
                 <form id="van_selling_upload_new_inventory">
                     <div class="form-group">
                         <label for="exampleInputFile">File input</label>
-                        <input type="file" name="agent_csv_file" required class="form-control">
+                        <input type="file" name="agent_csv_file" accept=".csv" required class="form-control">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-block">SUBMIT NEW INVENTORY</button>

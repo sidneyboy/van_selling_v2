@@ -25,24 +25,30 @@
                  </div>
              </div>
              <div class="card-body">
-                 <table class="table table-bordered table-sm table-striped table-hover" id="example2">
-                     <thead>
-                         <tr>
-                             <th>Principal</th>
-                             <th>Description</th>
-                             <th>Inventory</th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                         @for ($i = 0; $i < count($sku_ledger); $i++)
+                 <div class="table table-responsive">
+                     <table class="table table-bordered table-sm table-striped table-hover" id="example2">
+                         <thead>
                              <tr>
-                                 <td>{{ $sku_ledger[$i]->principal }}</td>
-                                 <td> <b style="color:green">{{ $sku_ledger[$i]->sku_code }}</b> - {{ $sku_ledger[$i]->description }}</td>
-                                 <td style="text-align: right">{{ $sku_ledger[$i]->running_balance }}</td>
+                                 <th>Principal</th>
+                                 <th>Description</th>
+                                 <th>Qty</th>
                              </tr>
-                         @endfor
-                     </tbody>
-                 </table>
+                         </thead>
+                         <tbody>
+                             @for ($i = 0; $i < count($sku_ledger); $i++)
+                                 <tr>
+                                     <td>{{ $sku_ledger[$i]->principal }}</td>
+                                     <td><b style="color:green">{{ $sku_ledger[$i]->sku_code }}</b> -
+                                         {{ $sku_ledger[$i]->description }}<br />
+                                         <b style="color:blue">{{ $sku_ledger[$i]->sku_type }}</b>
+
+                                        </td>
+                                     <td style="text-align: right">{{ $sku_ledger[$i]->running_balance }}</td>
+                                 </tr>
+                             @endfor
+                         </tbody>
+                     </table>
+                 </div>
              </div>
          </div>
      </section>

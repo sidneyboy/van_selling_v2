@@ -3,16 +3,6 @@
         <table class="table table-bordered table-hovered table-striped table-sm" id="export_table">
             <thead>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th colspan="2" style="text-align: center;">VAN SELLING EXPORT</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
                     <th>{{ $full_name }}</th>
                     <th>{{ $user_id }}</th>
                     <th></th>
@@ -22,8 +12,10 @@
                     <th>DATE RANGE</th>
                     <th>{{ $date_from . ' - ' . $date_to }}</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 <tr>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -38,8 +30,9 @@
                     <th>DATE</th>
                     <th>CUSTOMER</th>
                     <th>DR NO</th>
-                    <th>CODE</th>
+                    <th>ID</th>
                     <th>DESCRIPTION</th>
+                    <th>SKU TYPE</th>
                     <th>QTY</th>
                     <th>U/P</th>
                     <th>AMOUNT</th>
@@ -54,8 +47,9 @@
                                 <td>{{ $data->date }}</td>
                                 <td>{{ $data->store_name }}</td>
                                 <td>{{ $data->delivery_receipt }}</td>
-                                <td>{{ $details->sku_code }}</td>
-                                <td>{{ $details->description }}</td>
+                                <td>{{ $details->sku_id }}</td>
+                                <td>{{ $details->sku_code }}-{{ $details->description }}</td>
+                                <td>{{ $details->sku->sku_type }}</td>
                                 <td style="text-align: right">{{ $details->quantity }}</td>
                                 <td style="text-align: right">{{ $details->price }}</td>
                                 <td style="text-align: right">{{ $details->amount }}</td>

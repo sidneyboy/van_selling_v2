@@ -59,8 +59,9 @@
                                          <td>{{ str_replace(',', '', $data->address) }}</td>
                                          <td>{{ str_replace(',', '', $data->contact_person) }}</td>
                                          <td>{{ str_replace(',', '', $data->contact_number) }}</td>
-                                         <td>{{ str_replace(',', '', $data->longitude) }}</td>
                                          <td>{{ str_replace(',', '', $data->latitude) }}</td>
+                                         <td>{{ str_replace(',', '', $data->longitude) }}</td>
+                                        
                                          <td>
                                              @if ($data->status == null)
                                                  <a class="btn btn-primary btn-block btn-sm"
