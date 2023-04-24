@@ -16,5 +16,6 @@ class Vs_os_inventories extends Model
         'sku_type',
         'unit_of_measurement',
         'unit_price',
+        'sku_id',
     ];
 }

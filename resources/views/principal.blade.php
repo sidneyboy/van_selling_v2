@@ -104,7 +104,7 @@
 
   $("#principal_upload").on('submit',(function(e){
         e.preventDefault();
-        //$('.loading').show();
+        $('.loading').show();
           $.ajax({
             url: "principal_upload",
             type: "POST",

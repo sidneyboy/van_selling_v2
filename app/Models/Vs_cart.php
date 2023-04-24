@@ -17,5 +17,11 @@ class Vs_cart extends Model
         'unit_of_measurement',
         'sku_type',
         'price',
+        'sku_id',
     ];
+
+    public function sku()
+    {
+        return $this->belongsTo('App\Models\Vs_upload_inventory', 'sku_id', 'sku_id');
+    }
 }

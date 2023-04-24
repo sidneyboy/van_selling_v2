@@ -12,10 +12,11 @@ class Vs_os_cart extends Model
     protected $fillable = [
         'sku_code',
         'quantity',
+        'sku_id',
     ];
 
     public function sku()
     {
-        return $this->belongsTo('App\Models\Vs_os_inventories', 'sku_code','sku_code');
+        return $this->belongsTo('App\Models\Vs_os_inventories', 'sku_id','sku_id');
     }
 }

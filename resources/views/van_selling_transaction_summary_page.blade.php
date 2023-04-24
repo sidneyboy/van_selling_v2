@@ -86,7 +86,7 @@
                     @foreach ($cart as $data)
                         @if ($data->quantity != 0)
                             <tr>
-                                <th>{{ $data->sku_code }} <br />{{ $data->description }}<br /> x
+                                <th>{{ $data->sku_code }} <br />{{ $data->description }}<br />{{ $data->sku->sku_type }} x
                                     {{ $data->quantity }}
                                 </th>
                                 <th style="text-align: right">{{ number_format($data->price, 2, '.', ',') }}</th>

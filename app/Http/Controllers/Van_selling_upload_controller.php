@@ -41,8 +41,6 @@ class Van_selling_upload_controller extends Controller
 
 	public function van_selling_upload_new_inventory(Request $request)
 	{
-
-
 		date_default_timezone_set('Asia/Manila');
 		$date = date('Y-m-d');
 
@@ -64,17 +62,18 @@ class Van_selling_upload_controller extends Controller
 
 			for ($i = 2; $i < $data_counter; $i++) {
 				$new = new Vs_upload_inventory([
+					'sku_id' => $csv[$i][0],
 					'store_name' => $csv[0][0],
-					'principal' => $csv[$i][1],
-					'sku_code' => $csv[$i][2],
-					'description' => $csv[$i][3],
-					'unit_of_measurement' => $csv[$i][4],
-					'sku_type' => $csv[$i][0],
-					'butal_equivalent' => $csv[$i][6],
+					'principal' => $csv[$i][2],
+					'sku_code' => $csv[$i][3],
+					'description' => $csv[$i][4],
+					'unit_of_measurement' => $csv[$i][5],
+					'sku_type' => $csv[$i][1],
+					'butal_equivalent' => $csv[$i][7],
 					'reference' => 'upload',
-					'quantity' => $csv[$i][5],
-					'running_balance' => $csv[$i][5],
-					'unit_price' => $csv[$i][7],
+					'quantity' => $csv[$i][6],
+					'running_balance' => $csv[$i][6],
+					'unit_price' => $csv[$i][8],
 					'date' => $date,
 				]);
 
@@ -93,6 +92,7 @@ class Van_selling_upload_controller extends Controller
 					'sku_type' => $csv[$i][5],
 					'unit_of_measurement' => $csv[$i][6],
 					'unit_price' => $csv[$i][7],
+					'sku_id' => $csv[$i][1],
 				]);
 
 				$new_inventory->save();

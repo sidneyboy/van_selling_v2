@@ -10,6 +10,7 @@ class Vs_upload_inventory extends Model
     use HasFactory;
 
     protected $fillable = [
+        'sku_id',
         'store_name',
         'principal',
         'sku_code',

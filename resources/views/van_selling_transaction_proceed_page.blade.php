@@ -113,7 +113,8 @@
                     @foreach ($os_cart as $os_data)
                         <tr>
                             <td><b style="color:green">{{ $os_data->sku_code }}</b><br />
-                                {{ $os_data->sku->description }}
+                                {{ $os_data->sku->description }}<br />
+                                <b style="color:blue;">{{ $os_data->sku->sku_type }}</b>
                             </td>
                             <td style="text-align: right">{{ $os_data->quantity }}</td>
                             <td style="text-align: right">{{ number_format($os_data->sku->unit_price, 2, '.', ',') }}
@@ -158,7 +159,8 @@
                     @foreach ($cart as $data)
                         <tr>
                             <td><b style="color:green">{{ $data->sku_code }}</b><br />
-                                {{ $data->description }}
+                                {{ $data->description }}<br />
+                                <b style="color:blue;">{{ $data->sku->sku_type }}</b>
                             </td>
                             <td style="text-align: right">{{ $data->quantity }}</td>
                             <td style="text-align: right">{{ number_format($data->price, 2, '.', ',') }}</td>
