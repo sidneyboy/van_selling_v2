@@ -330,7 +330,7 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{ url('van_selling_pre_inventory') }}"
                                             class="nav-link {{ $active == 'van_selling_pre_inventory' ? 'active' : '' }}">
                                             <i class="nav-icon fas fa-solid fa-arrow-right"></i>
@@ -338,7 +338,7 @@
                                                 Pre Inventory
                                             </p>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{ url('van_selling_ar_ledger') }}"
                                             class="nav-link {{ $active == 'van_selling_ar_ledger' ? 'active' : '' }}">

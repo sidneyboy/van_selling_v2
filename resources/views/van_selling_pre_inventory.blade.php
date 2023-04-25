@@ -27,17 +27,17 @@
                 </div>
             </div>
             <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Select Principal</label>
-                            <select name="principal" id="principal" required class="form-control select2" style="width:100%;">
-                                <option value="" default>SELECT</option>
-                                @foreach ($principal as $data)
-                                    <option value="{{ $data->principal }}">{{ $data->principal }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Select Principal</label>
+                        <select name="principal" id="principal" required class="form-control select2" style="width:100%;">
+                            <option value="" default>SELECT</option>
+                            @foreach ($principal as $data)
+                                <option value="{{ $data->principal }}">{{ $data->principal }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                </div>
                 </form>
             </div>
             <!-- /.card-body -->
@@ -83,7 +83,7 @@
 
         $("#principal").change(function() {
             $('#van_selling_pre_inventory_generate_sku').show();
-            //$('.loading').show();
+            $('.loading').show();
             $('#hide_if_trigger').show();
             var principal = $('#principal').val();
             $.post({
@@ -91,17 +91,19 @@
                 url: "/van_selling_pre_inventory_generate_sku",
                 data: 'principal=' + principal,
                 success: function(data) {
-                    console.log(data);
-
                     $('#van_selling_pre_inventory_generate_sku_page').html(data);
                     $('.loading').hide();
                 },
                 error: function(error) {
-                    console.log(error);
+                    $('.loading').hide();
+                    Swal.fire(
+                        'Cannot Proceed',
+                        'Please Contact IT Support',
+                        'error'
+                    )
                 }
             });
         });
-
     </script>
     </body>
 

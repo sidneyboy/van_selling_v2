@@ -38,7 +38,7 @@
                             </ul>
                         </div>
                     @endif
-                    
+
                     <label for="">CONTACT PERSON</label>
                     <input type="text" name="contact_person" required class="form-control">
 
@@ -48,9 +48,11 @@
 
                     <input type="hidden" id="marker_image" value="{{ asset('images/marker.png') }}">
 
+                    <label for="">LATITUDE</label>
+                    <input type="text" name="latitude" id="latitude" class="form-control">
 
-                    <input type="hidden" name="longitude" id="longitude" class="form-control">
-                    <input type="hidden" name="latitude" id="latitude" class="form-control">
+                    <label for="">LONGITUDE</label>
+                    <input type="text" name="longitude" id="longitude" class="form-control">
 
                     <input type="hidden" value="{{ $customer->id }}" name="id">
 
@@ -84,21 +86,14 @@
         });
 
         $(document).ready(function() {
-            // function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
                 x.innerHTML = "Geolocation is not supported by this browser.";
             }
-            // }
+         
 
             function showPosition(position) {
-                // x.innerHTML = "Latitude: " + position.coords.latitude +
-                //     "<br>Longitude: " + position.coords.longitude;
-
-                //       $('#latitude').val(position.coords.latitude);
-                //       $('#longitude').val(position.coords.longitude);
-
                 var view = new ol.View({
                     projection: 'EPSG:4326',
                     center: [position.coords.longitude, position.coords.latitude],
@@ -161,8 +156,8 @@
                     } else {
                         var point = map.getCoordinateFromPixel(e.pixel)
                         console.log(e.coordinate);
-                        $('#latitude').val(e.coordinate[0]);
-                        $('#longitude').val(e.coordinate[1]);
+                        $('#latitude').val(e.coordinate[1]);
+                        $('#longitude').val(e.coordinate[0]);
 
 
                         var marker = new ol.Feature({

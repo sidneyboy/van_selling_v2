@@ -12,16 +12,19 @@
                 @foreach ($sku_data as $data)
                     <tr>
                         <td>
-                            {{ $data->sku_code }}
-                            <input type="hidden" value="{{ $data->sku_code }}" name="sku_code[]">
+                            <b
+                                style="color:green">{{ $data->sku_code }}</b><br />{{ $data->description }}<br /><b>{{ $data->sku_type }}</b>
+                            <input type="hidden" value="{{ $data->sku_id }}" name="sku_id[]">
+                            <input type="hidden" value="{{ $data->sku_code }}" name="sku_code[{{ $data->sku_id }}]">
                         </td>
                         <td>{{ $data->description }}</td>
-                        <td><input type="number" name="quantity[{{ $data->sku_code }}]" class="form-control" required value="0"
-                                style="width:100px;text-align:center;"></td>
+                        <td><input type="number" name="quantity[{{ $data->sku_id }}]" class="form-control" required
+                                value="0" style="width:100px;text-align:center;"></td>
                     </tr>
                     <tr>
                         <td>REMARKS:</td>
-                        <td colspan="2"><input type="text" class="form-control" placeholder="Input SKU Remarks" min="1" name="remarks[{{ $data->sku_code }}]"></td>
+                        <td colspan="2"><input type="text" class="form-control" placeholder="Input SKU Remarks"
+                                min="1" name="remarks[{{ $data->sku_id }}]"></td>
                     </tr>
                 @endforeach
             </tbody>
@@ -43,7 +46,6 @@
             cache: false,
             processData: false,
             success: function(data) {
-
                 if (data == 'NO_DATA_FOUND') {
                     Swal.fire(
                         'NO DATA FOUND!',
@@ -56,6 +58,15 @@
                     $('.loading').hide();
                 }
             },
+
+            error: function(error) {
+                $('.loading').hide();
+                Swal.fire(
+                    'Cannot Proceed',
+                    'Please Contact IT Support',
+                    'error'
+                )
+            }
         });
     }));
 </script>

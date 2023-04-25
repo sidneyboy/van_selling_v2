@@ -10,19 +10,25 @@ class Van_selling_transaction_details extends Model
     use HasFactory;
 
     protected $fillable = [
-    	'sku_code',
+        'sku_code',
         'description',
-    	'quantity',
+        'quantity',
         'principal',
-    	'price',
-    	'amount',
-    	'van_selling_trans_id',
-    	'status',
+        'price',
+        'amount',
+        'van_selling_trans_id',
+        'status',
         'remarks',
+        'sku_id',
     ];
 
-     public function van_selling_transaction()
+    public function van_selling_transaction()
     {
-      return $this->belongsTo('App\Models\Van_selling_transaction', 'van_selling_trans_id');
+        return $this->belongsTo('App\Models\Van_selling_transaction', 'van_selling_trans_id');
+    }
+
+    public function sku()
+    {
+        return $this->belongsTo('App\Models\Vs_upload_inventory', 'sku_id', 'sku_id');
     }
 }

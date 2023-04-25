@@ -111,9 +111,8 @@
                         <tr>
                             <th>{{ $data->store_name }}</th>
                             <th>
-                                {{$details->sku_code}}<br />
-
-                                {{ $details->description }} <br />  {{ $details->price }}</th>
+                                {{$details->sku_code}} <b>({{ $details->sku->sku_type }})</b> <br />
+                                {{ $details->description }} <br />{{ $details->price }}</th>
                             <th style="text-align: right;">{{ $details->quantity }}</th>
                             <th style="text-align: right;">
                                 @php
@@ -206,14 +205,13 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-info btn-block" id="convert">DOWNLOAD DSRR</button>
+            <button class="btn btn-info btn-block" id="convert">SCREENSHOT</button>
             <div style="" id="result"></div>
         </div>
         <div class="col-md-12">
             <label>&nbsp;</label>
             <button class="btn btn-block btn-success"
-                onclick="exportTableToCSV('{{ $full_name . ' ' . $search_for . ' ' . $date_from . ' - ' . $date_to }}.csv')">EXPORT
-                DATA</button>
+                onclick="exportTableToCSV('{{ $full_name . ' ' . $search_for . ' ' . $date_from . ' - ' . $date_to }}.csv')">EXPORT</button>
         </div>
     </div>
 @endif

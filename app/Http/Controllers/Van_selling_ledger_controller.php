@@ -18,7 +18,7 @@ class Van_selling_ledger_controller extends Controller
     {
 
         $agent_user = Agent_user::first();
-        $sku_ledger = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories GROUP BY sku_code)");
+        $sku_ledger = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories GROUP BY sku_id)");
         return view('van_selling_ledger', [
             'sku_ledger' => $sku_ledger,
         ])->with('active', 'van_selling_ledger')

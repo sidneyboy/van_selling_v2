@@ -33,6 +33,8 @@
                          <table class="table table-bordered table-sm table-striped" id="export_table">
                              <thead>
                                  <tr>
+                                    <th></th>
+                                     <th></th>
                                      <th></th>
                                      <th></th>
                                      <th></th>
@@ -49,15 +51,20 @@
                                      <th>{{ $agent_user->user_id }}</th>
                                      <th></th>
                                      <th style="text-transform: uppercase;" colspan="2">
-                                         {{ $agent_user->full_name . '-VAN_SELLING_EXPORTED_DATA' . $date . '-' . $time }}</th>
+                                         {{ $agent_user->full_name . '-VAN_SELLING_EXPORTED_DATA' . $date . '-' . $time }}
+                                     </th>
                                      <th></th>
                                      <th>DATE EXPORTED</th>
                                      <th>{{ $date }}</th>
                                      <th></th>
                                      <th></th>
                                      <th></th>
+                                     <th></th>
+                                     <th></th>
                                  </tr>
                                  <tr>
+                                     <th></th>
+                                     <th></th>
                                      <th></th>
                                      <th></th>
                                      <th></th>
@@ -74,14 +81,16 @@
                                      <th>DATE</th>
                                      <th>CUSTOMER</th>
                                      <th>DR NO</th>
+                                     <th>ID</th>
                                      <th>CODE</th>
                                      <th>DESCRIPTION</th>
+                                     <th>TYPE</th>
                                      <th>QTY</th>
                                      <th>U/P</th>
                                      <th>AMOUNT</th>
                                      <th>LOCATION</th>
-			       <th>Barangay</th>
-			       <th>Address</th>
+                                     <th>Barangay</th>
+                                     <th>Address</th>
                                  </tr>
                              </thead>
                              <tbody>
@@ -91,20 +100,22 @@
                                              @if ($details->remarks != 'EXPORTED')
                                                  <tr>
                                                      <td>
-                                                         {{ str_replace(',','',$data->remarks) }}
+                                                         {{ str_replace(',', '', $data->remarks) }}
                                                          <input type="hidden" name="details_id[]"
                                                              value="{{ $details->id }}">
                                                      </td>
-                                                     <td>{{ str_replace(',','',$data->store_name) }}</td>
-                                                     <td>{{ str_replace(',','',$data->delivery_receipt) }}</td>
-                                                     <td>{{ str_replace(',','',$details->sku_code) }}</td>
-                                                     <td>{{ str_replace(',','',$details->description) }}</td>
-                                                     <td>{{ str_replace(',','',$details->quantity) }}</td>
-                                                     <td>{{ str_replace(',','',$details->price) }}</td>
-                                                     <td>{{ str_replace(',','',$details->amount) }}</td>
-                                                     <td>{{ str_replace(',','',$data->full_address) }}</td>
-					   <td>{{ str_replace(',','',$data->barangay) }}</td>
-					   <td>{{ str_replace(',','',$data->address) }}</td>
+                                                     <td>{{ str_replace(',', '', $data->store_name) }}</td>
+                                                     <td>{{ str_replace(',', '', $data->delivery_receipt) }}</td>
+                                                     <td>{{ str_replace(',', '', $details->sku_id) }}</td>
+                                                     <td>{{ str_replace(',', '', $details->sku_code) }}</td>
+                                                     <td>{{ str_replace(',', '', $details->description) }}</td>
+                                                     <td>{{ str_replace(',', '', $details->sku->sku_type) }}</td>
+                                                     <td>{{ str_replace(',', '', $details->quantity) }}</td>
+                                                     <td>{{ str_replace(',', '', $details->price) }}</td>
+                                                     <td>{{ str_replace(',', '', $details->amount) }}</td>
+                                                     <td>{{ str_replace(',', '', $data->full_address) }}</td>
+                                                     <td>{{ str_replace(',', '', $data->barangay) }}</td>
+                                                     <td>{{ str_replace(',', '', $data->address) }}</td>
                                                  </tr>
                                              @endif
                                          @endif
