@@ -64,11 +64,13 @@ class Van_selling_transaction_controller extends Controller
             }
             $os_sku = Vs_os_inventories::select('sku_id', 'sku_code', 'description', 'unit_price', 'sku_type')
                 ->whereNotIn('sku_id', $not_included)
+                    ->where('principal',$principal)
                 ->orderBy('sku_id', 'desc')
                 ->get();
         } else {
             $os_sku = Vs_os_inventories::select('sku_id', 'sku_code', 'description', 'unit_price', 'sku_type')
                 ->orderBy('sku_id', 'desc')
+                ->where('principal',$principal)
                 ->get();
         }
 
