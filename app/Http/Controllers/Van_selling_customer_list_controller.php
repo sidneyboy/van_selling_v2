@@ -84,10 +84,9 @@ class Van_selling_customer_list_controller extends Controller
 		//return $csv;
 		$data_counter = count($csv);
 
-		if (isset($csv[0][9])) {
-
-			if ($csv[0][9] == 'VAN_SELLING_CUSTOMER_EXPORTED_FROM_MAIN_SYSTEM') {
-				for ($i = 1; $i < $data_counter; $i++) {
+		if (isset($csv[0][0])) {
+			if ($csv[0][0] == 'van_selling_customer_exported_from_main_system') {
+				for ($i = 2; $i < $data_counter; $i++) {
 					$new = new Van_selling_customer([
 						'store_name' => $csv[$i][1],
 						'store_type' => $csv[$i][2],
