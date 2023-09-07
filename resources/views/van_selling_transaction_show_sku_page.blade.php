@@ -34,7 +34,9 @@
                         <b style="color:blue;">{{ $os_data->sku_type }}</b>
                     </td>
                     <td style="text-align: right">0</td>
-                    <td style="text-align: right">{{ number_format($os_data->unit_price, 2, '.', ',') }}</td>
+                    <td style="text-align: right">
+                        {{ number_format(floatval($os_data->unit_price), 2, '.', ',') }}
+                    </td>
                     <td><input type="number" min="0" style="width:70px;"
                             name="os_quantity[{{ $os_data->sku_id }}]" class="form-control form-control-sm"></td>
                 </tr>

@@ -56,23 +56,28 @@ class Van_selling_transaction_controller extends Controller
     {
         //return $request->input();
         $principal = $request->input('principal');
-        $sku = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories WHERE principal = '$principal' GROUP BY sku_id)");
+        $sku = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories WHERE principal = '$principal' AND reference != 'cancelled' GROUP BY sku_id)");
 
         if ($sku) {
             for ($i = 0; $i < count($sku); $i++) {
                 $not_included[] = $sku[$i]->sku_id;
             }
+
             $os_sku = Vs_os_inventories::select('sku_id', 'sku_code', 'description', 'unit_price', 'sku_type')
                 ->whereNotIn('sku_id', $not_included)
-                    ->where('principal',$principal)
+                ->where('principal', $principal)
                 ->orderBy('sku_id', 'desc')
                 ->get();
         } else {
             $os_sku = Vs_os_inventories::select('sku_id', 'sku_code', 'description', 'unit_price', 'sku_type')
                 ->orderBy('sku_id', 'desc')
-                ->where('principal',$principal)
+                ->where('principal', $principal)
                 ->get();
         }
+
+        //return $os_sku;
+
+
 
         return view('van_selling_transaction_show_sku_page', [
             'sku' => $sku,
