@@ -167,7 +167,7 @@
 
             if (text) {
                 var van_selling_transaction_id = $(this).val();
-                $('.loading').show();
+                // $('.loading').show();
                 $.post({
                     type: "POST",
                     url: "/van_selling_transaction_report_cancel",

@@ -1,7 +1,7 @@
 @if ($search_for == 'dsrr')
     <div class="table table-responsive">
         <table class="table table-bordered table-sm table-striped" id="dsrr_table"
-            style="font-size:20px;font-family: Arial, Helvetica, sans-serif;">
+            style="font-size:16px;font-family: Arial, Helvetica, sans-serif;">
             <thead>
                 <tr>
                     <th>{{ $full_name }}</th>
