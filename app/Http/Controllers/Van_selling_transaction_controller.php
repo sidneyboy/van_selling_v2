@@ -56,7 +56,7 @@ class Van_selling_transaction_controller extends Controller
     {
         //return $request->input();
         $principal = $request->input('principal');
-        $sku = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories WHERE principal = '$principal' AND reference != 'cancelled' GROUP BY sku_id)");
+        $sku = DB::select("SELECT * FROM Vs_upload_inventories WHERE id IN (SELECT MAX(id) FROM Vs_upload_inventories WHERE principal = '$principal' AND reference != 'CANCELLED' GROUP BY sku_id)");
 
         if ($sku) {
             for ($i = 0; $i < count($sku); $i++) {
@@ -74,8 +74,6 @@ class Van_selling_transaction_controller extends Controller
                 ->where('principal', $principal)
                 ->get();
         }
-
-        //return $os_sku;
 
 
 
