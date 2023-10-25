@@ -38,7 +38,10 @@
                         {{ number_format(floatval($os_data->unit_price), 2, '.', ',') }}
                     </td>
                     <td><input type="number" min="0" style="width:70px;"
-                            name="os_quantity[{{ $os_data->sku_id }}]" class="form-control form-control-sm"></td>
+                            name="os_quantity[{{ $os_data->sku_id }}]" class="form-control form-control-sm">
+                        <input type="hidden" value="{{ $os_data->unit_price }}"
+                            name="os_unit_price[{{ $os_data->sku_id }}]">
+                    </td>
                 </tr>
             @endforeach
         </tbody>

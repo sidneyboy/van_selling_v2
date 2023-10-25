@@ -13,6 +13,7 @@ class Vs_os_cart extends Model
         'sku_code',
         'quantity',
         'sku_id',
+        'unit_price',
     ];
 
     public function sku()

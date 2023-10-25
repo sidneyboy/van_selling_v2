@@ -88,6 +88,7 @@ class Van_selling_transaction_controller extends Controller
         //return $request->input();
         $sku_quantity = array_filter($request->input('sku_quantity'));
         $os_quantity = array_filter($request->input('os_quantity'));
+        $os_unit_price = array_filter($request->input('os_unit_price'));
 
         foreach ($sku_quantity as $checker_key => $checker_value) {
             if ($checker_value > $request->input('running_balance')[$checker_key]) {
@@ -131,6 +132,7 @@ class Van_selling_transaction_controller extends Controller
                     'sku_code' => $sku_os->sku_code,
                     'quantity' => $os_quantity,
                     'sku_id' => $os_key,
+                    'unit_price' => $os_unit_price[$os_key],
                 ]);
 
                 $new_os_cart->save();
@@ -293,6 +295,7 @@ class Van_selling_transaction_controller extends Controller
                     'os_code' => $van_selling_os_data_code,
                     'date' => $date,
                     'sku_id' => $os_data->sku->sku_id,
+                    'unit_price' => $os_data->unit_price,
                 ]);
 
                 $new_os_data->save();

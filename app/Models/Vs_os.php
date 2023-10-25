@@ -18,6 +18,7 @@ class Vs_os extends Model
         'date',
         'status',
         'sku_id',
+        'unit_price',
     ];
 
     public function sku()

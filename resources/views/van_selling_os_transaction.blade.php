@@ -31,6 +31,7 @@
                                 <th>{{ $agent_user->user_id }}</th>
                                 <th>{{ $date ."-". uniqid() }}</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             <tr>
                                 <th>Date</th>
@@ -38,6 +39,7 @@
                                 <th>SKU ID</th>
                                 <th>Code</th>
                                 <th>Qty</th>
+                                <th>Unit Price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +52,7 @@
                                     <th>{{ $data->sku_code }}</th>
                                     <th>{{ $data->sku_id }}</th>
                                     <th>{{ $data->quantity }}</th>
+                                    <th>{{ $data->unit_price }}</th>
                                 </tr>
                             @endforeach
                         </tbody>
