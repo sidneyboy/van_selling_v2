@@ -21,35 +21,46 @@
                 </div>
             </div>
             <div class="card-body">
-                <form id="van_selling_os_transaction_proceed">
+                <form action="{{ route('van_selling_export_os_update_remarks') }}" method="post">
+                    @csrf
+                    <table class="table table-bordered table-sm table-striped" id="export_table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Store</th>
+                                <th>SKU ID</th>
+                                <th>Code</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($os as $data)
+                                <tr>
+                                    <th>{{ $data->date }}
+                                        <input type="hidden" name="id[]"  value="{{ $data->id }}">
+                                    </th>
+                                    <th>{{ $data->store_name }}</th>
+                                    <th>{{ $data->sku_code }}</th>
+                                    <th>{{ $data->sku_id }}</th>
+                                    <th>{{ $data->quantity }}</th>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                     <div class="row">
                         <div class="col-md-12">
-                            <label>CUSTOMER:</label>
-                            <select class="form-control select2" style="width:100%;" name="os_code" id="os_code" required>
-                                <option value="" default>SELECT</option>
-                                @foreach ($os as $data)
-                                    <option value="{{ $data->os_code }}">{{ $data->store_name }} - {{ $data->date }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-12">
                             <label>&nbsp;</label>
-                            <div id="van_selling_transaction_show_sku_page"></div>
-                        </div>
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-info btn-block">PROCEED</button>
+                            <button class="btn btn-block btn-success" style="text-transform: uppercase;"
+                                onclick="exportTableToCSV('{{ $agent_user->full_name . '-VAN_SELLING_SALES-' . $date . '-' . $time }}.csv')">EXPORT
+                                TABLE DATA</button>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="card-footer">
-                <div id="van_selling_os_transaction_proceed_page"></div>
-            </div>
             <!-- /.card -->
         </div>
 
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-header">
                 <h3 class="card-title" style="font-weight: bold;"></h3>
                 <div class="card-tools">
@@ -64,9 +75,9 @@
             <div class="card-body">
                 <div id="van_selling_os_transaction_summary_page"></div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-header">
                 <h3 class="card-title" style="font-weight: bold;">SUMMARY</h3>
                 <div class="card-tools">
@@ -85,7 +96,7 @@
 
             </div>
             <!-- /.card -->
-        </div>
+        </div> --}}
     </section>
     <!-- /.content -->
 @endsection
@@ -99,31 +110,51 @@
             }
         });
 
-        $("#van_selling_os_transaction_proceed").on('submit', (function(e) {
-            e.preventDefault();
-            //$('.loading').show();
-            $.ajax({
-                url: "van_selling_os_transaction_proceed",
-                type: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(data) {
-                    $('.loading').hide();
-                    $('#van_selling_os_transaction_proceed_page').html(data);
-                    $('#hide_if_trigger').show();
-                },
-                error: function(error) {
-                    $('.loading').hide();
-                    Swal.fire(
-                        'Cannot Proceed',
-                        'Please Contact IT Support',
-                        'error'
-                    )
-                }
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            // CSV file
+            csvFile = new Blob([csv], {
+                type: "text/csv"
             });
-        }));
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("#export_table tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [],
+                    cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join(","));
+            }
+
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
     </script>
     </body>
 

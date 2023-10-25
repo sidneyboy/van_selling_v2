@@ -19,12 +19,31 @@ class Van_selling_os_transaction_controller extends Controller
         } else if (empty($location)) {
             return redirect('location');
         } else {
-            $os = Vs_os::select('os_code', 'store_name', 'date')->groupBy('os_code')->orderBy('id', 'desc')->get();
+            // $os = Vs_os::select('os_code', 'store_name', 'date')->groupBy('os_code')->orderBy('id', 'desc')->get();
+            $os = Vs_os::where('status', null)->get();
+            date_default_timezone_set('Asia/Manila');
+            $date = date('Y-m-d');
+            $time = date('His');
             return view('van_selling_os_transaction', [
                 'os' => $os,
+                'date' => $date,
+                'time' => $time,
             ])->with('active', 'van_selling_os_transaction')
                 ->with('agent_user', $agent_user);
         }
+    }
+
+    public function van_selling_export_os_update_remarks(Request $request)
+    {
+        if (is_null($request->input('id'))) {
+            return redirect('van_selling_transaction');
+        } else {
+            foreach ($request->input('id') as $key => $data) {
+                Vs_os::where('id', $data)
+                    ->update(['status' => 'exported']);
+            }
+        }
+        return redirect('van_selling_transaction');
     }
 
     public function van_selling_os_transaction_proceed(Request $request)

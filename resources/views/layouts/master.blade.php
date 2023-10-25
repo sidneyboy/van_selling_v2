@@ -353,7 +353,16 @@
                                             class="nav-link {{ $active == 'van_selling_export_sales' ? 'active' : '' }}">
                                             <i class="nav-icon fas fa-solid fa-arrow-right"></i>
                                             <p>
-                                                Sales 
+                                                Sales
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_os_transaction') }}"
+                                            class="nav-link {{ $active == 'van_selling_os_transaction' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                OS
                                             </p>
                                         </a>
                                     </li>
@@ -369,15 +378,7 @@
                                 </a>
                             </li>
 
-                            {{-- <li class="nav-item">
-                                <a href="{{ url('van_selling_os_transaction') }}"
-                                    class="nav-link {{ $active == 'van_selling_os_transaction' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-solid fa-money-bill"></i>
-                                    <p>
-                                        OS
-                                    </p>
-                                </a>
-                            </li> --}}
+
 
                             <li class="nav-item">
                                 <a href="{{ url('van_selling_transaction') }}"

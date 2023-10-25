@@ -250,12 +250,13 @@ Route::post('/van_selling_os_transaction_proceed', [App\Http\Controllers\Van_sel
 Route::post('/van_selling_os_transaction_summary', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_os_transaction_summary'])->name('van_selling_os_transaction_summary');
 Route::post('/van_selling_os_transaction_final_summary', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_os_transaction_final_summary'])->name('van_selling_os_transaction_final_summary');
 
+Route::post('/van_selling_export_os_update_remarks', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_export_os_update_remarks'])->name('van_selling_export_os_update_remarks');
 
 
 
 
 
-
+// van_selling_os_export
 
 
 
