@@ -26,6 +26,13 @@
                     <table class="table table-bordered table-sm table-striped" id="export_table">
                         <thead>
                             <tr>
+                                <th>VAN SELLING OS REPORT</th>
+                                <th>{{ $agent_user->full_name }}</th>
+                                <th>{{ $agent_user->user_id }}</th>
+                                <th>{{ $date ."-". uniqid() }}</th>
+                                <th></th>
+                            </tr>
+                            <tr>
                                 <th>Date</th>
                                 <th>Store</th>
                                 <th>SKU ID</th>
