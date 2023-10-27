@@ -253,6 +253,9 @@ Route::post('/van_selling_os_transaction_final_summary', [App\Http\Controllers\V
 Route::post('/van_selling_export_os_update_remarks', [App\Http\Controllers\Van_selling_os_transaction_controller::class, 'van_selling_export_os_update_remarks'])->name('van_selling_export_os_update_remarks');
 
 
+Route::get('/van_selling_unproductive_calls', [App\Http\Controllers\Van_selling_unproductive_calls_controller::class, 'index'])->name('van_selling_unproductive_calls');
+Route::post('/van_selling_export_productive_calls_update_status', [App\Http\Controllers\Van_selling_unproductive_calls_controller::class, 'van_selling_export_productive_calls_update_status'])->name('van_selling_export_productive_calls_update_status');
+
 
 
 

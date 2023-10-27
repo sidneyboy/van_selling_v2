@@ -366,6 +366,15 @@
                                             </p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('van_selling_unproductive_calls') }}"
+                                            class="nav-link {{ $active == 'van_selling_unproductive_calls' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-solid fa-arrow-right"></i>
+                                            <p>
+                                                UNP-Calls
+                                            </p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
