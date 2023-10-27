@@ -160,7 +160,7 @@ class Van_selling_transaction_controller extends Controller
 
     public function van_selling_transaction_summary(Request $request)
     {
-        //return $request->input();
+        return $request->input();
         date_default_timezone_set('Asia/Manila');
         $date = date('Y-m-d');
         $time = date('h:i:s a');

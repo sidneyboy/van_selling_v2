@@ -34,7 +34,5 @@ class Van_selling_export_sales_controller extends Controller
                 ->update(['remarks' => 'EXPORTED']);
             return redirect('van_selling_transaction');
         }
-
-        
     }
 }
