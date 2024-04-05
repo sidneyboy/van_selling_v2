@@ -70,7 +70,7 @@
                  cache: false,
                  processData: false,
                  success: function(data) {
-                     console.log(data);
+                     $('.loading').hide();
                      if (data == 'saved') {
                          Swal.fire({
                              position: 'top-end',
@@ -80,7 +80,6 @@
                              timer: 1500
                          })
 
-                         // location.reload();
                          window.location.href = "/principal";
                      } else {
                          Swal.fire(
@@ -90,7 +89,14 @@
                          )
                          $('.loading').hide();
                      }
-                 },
+                 },error: function(error) {
+    $('.loading').hide();
+    Swal.fire(
+    'Cannot Proceed',
+    'Please Contact IT Support',
+    'error'
+    )
+    }
              });
          }));
      </script>

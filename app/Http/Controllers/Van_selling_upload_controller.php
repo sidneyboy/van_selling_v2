@@ -61,7 +61,8 @@ class Van_selling_upload_controller extends Controller
 			Schema::enableForeignKeyConstraints();
 
 			for ($i = 2; $i < $data_counter; $i++) {
-				$new = new Vs_upload_inventory([
+				if ($csv[$i][0] != null) {
+					$new = new Vs_upload_inventory([
 					'sku_id' => $csv[$i][0],
 					'store_name' => $csv[0][0],
 					'principal' => $csv[$i][2],
@@ -78,13 +79,15 @@ class Van_selling_upload_controller extends Controller
 				]);
 
 				$new->save();
+				}
 			}
 		} else if ($csv[0][0] == 'VAN SELLING INVENTORY') {
 			Schema::disableForeignKeyConstraints();
 			DB::table('Vs_os_inventories')->truncate();
 			Schema::enableForeignKeyConstraints();
 			for ($i = 1; $i < $data_counter; $i++) {
-				$new_inventory = new Vs_os_inventories([
+				if ($csv[$i][0] != null) {
+					$new_inventory = new Vs_os_inventories([
 					'id' => $csv[$i][1],
 					'sku_code' => $csv[$i][2],
 					'description' => $csv[$i][3],
@@ -96,6 +99,7 @@ class Van_selling_upload_controller extends Controller
 				]);
 
 				$new_inventory->save();
+				}
 			}
 		} else {
 			return 'incorrect_file';

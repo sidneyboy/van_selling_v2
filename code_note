@@ -31,3 +31,53 @@ error: function(error) {
 
         return true;
     }
+
+
+
+
+
+
+
+
+
+    
+    $("#van_selling_transaction_proceed").on('submit', (function(e) {
+    e.preventDefault();
+    //$('#loader').show();
+    $('#hide_if_trigger').hide();
+    $.ajax({
+    url: "van_selling_transaction_proceed",
+    type: "POST",
+    data: new FormData(this),
+    contentType: false,
+    cache: false,
+    processData: false,
+    success: function(data) {
+    console.log(data);
+
+    $('#loader').hide();
+    $("#principal").val('').trigger('change');
+    $('#van_selling_transaction_show_sku_page').hide();
+    $('#van_selling_transaction_proceed_page').html(data);
+    $('#hide_if_trigger').show();
+
+    Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Your work has been saved',
+    showConfirmButton: false,
+    timer: 1500
+    });
+
+    location.reload();
+    },
+    error: function(error) {
+    $('#loader').hide();
+    Swal.fire(
+    'Cannot Proceed',
+    'Please Contact IT Support',
+    'error'
+    )
+    }
+    });
+    }));

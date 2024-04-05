@@ -61,7 +61,7 @@
                 cache: false,
                 processData: false,
                 success: function(data) {
-                   
+                    $('.loading').hide();
                     if (data == 'incorrect_file') {
                         Swal.fire(
                             'INCORRECT FILE',

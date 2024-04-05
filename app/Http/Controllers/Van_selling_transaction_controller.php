@@ -160,7 +160,7 @@ class Van_selling_transaction_controller extends Controller
 
     public function van_selling_transaction_summary(Request $request)
     {
-        return $request->input();
+        //return $request->input();
         date_default_timezone_set('Asia/Manila');
         $date = date('Y-m-d');
         $time = date('h:i:s a');
@@ -174,16 +174,17 @@ class Van_selling_transaction_controller extends Controller
             $year_and_month = $var_explode[2] . "-" . $var_explode[3];
             $series = $var_explode[4];
             if ($date_receipt != $year_and_month) {
-                $delivery_receipt = "VS-" . $agent_user->id . "-" . $date_receipt  . "-0001";
+                $delivery_receipt = "VS-" . $agent_user->user_id . "-" . $date_receipt  . "-0001";
             } else {
-                $delivery_receipt = "VS-" . $agent_user->id . "-" . $date_receipt . "-" . str_pad($series + 1, 4, 0, STR_PAD_LEFT);
+                $delivery_receipt = "VS-" . $agent_user->user_id . "-" . $date_receipt . "-" . str_pad($series + 1, 4, 0, STR_PAD_LEFT);
             }
         } else {
-            $delivery_receipt = "VS-" . $agent_user->id . "-" . $date_receipt  . "-0001";
+            $delivery_receipt = "VS-" . $agent_user->user_id . "-" . $date_receipt  . "-0001";
         }
 
+
         $cart = Vs_cart::get();
-        $explode = explode('-', $request->input('location_data'));
+        return $explode = explode('-', $request->input('location_data'));
         $location_id = $explode[0];
 
         return view('van_selling_transaction_summary_page', [

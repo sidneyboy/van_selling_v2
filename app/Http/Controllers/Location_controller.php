@@ -44,11 +44,13 @@ class Location_controller extends Controller
 		 $counter = count($csv);
 
 		 for ($i=1; $i < $counter; $i++) { 
-		 		$location_saved = new Location([
+		 	 if($csv[$i][0] != null){
+		 	 		$location_saved = new Location([
 					'id' => $csv[$i][0],
 					'location' => $csv[$i][1],	
 				]);
 		 		$location_saved->save();
+		 	 }
 		 }
 		 
 

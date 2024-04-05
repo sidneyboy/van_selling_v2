@@ -38,15 +38,19 @@ class Principal_controller extends Controller
 		 }
 
 		 $counter = count($csv);
-
+		 //return $csv;
 		 for ($i=1; $i < $counter; $i++) { 
-		 	$principal_search = Principal::where('principal',$csv[$i][1])->first();
-		 	if (!$principal_search) {
-		 		$principal_saved = new Principal([
-					'id' => $csv[$i][0],
-					'principal' => $csv[$i][1],
-				]);
-		 		$principal_saved->save();
+		 	if($csv[$i][0] != null){
+			 	$principal_search = Principal::where('principal',$csv[$i][1])->first();
+			 	if (!$principal_search) {
+			 	
+			 		$principal_saved = new Principal([
+						'id' => $csv[$i][0],
+						'principal' => $csv[$i][1],
+					]);
+			 		$principal_saved->save();
+			 		
+			 	}
 		 	}
 		 }
 		 
