@@ -184,7 +184,7 @@ class Van_selling_transaction_controller extends Controller
 
 
         $cart = Vs_cart::get();
-        return $explode = explode('-', $request->input('location_data'));
+        $explode = explode('-', $request->input('location_data'));
         $location_id = $explode[0];
 
         return view('van_selling_transaction_summary_page', [

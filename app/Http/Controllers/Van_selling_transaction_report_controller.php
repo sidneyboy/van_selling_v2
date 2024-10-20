@@ -107,8 +107,6 @@ class Van_selling_transaction_report_controller extends Controller
                 ->limit(1)
                 ->first();
 
-
-
             $van_selling_cancelation_details = new Van_selling_cancellation_details([
                 'vs_cancelation_id' => $van_selling_cancelation->id,
                 'sku_code' => $data->sku_code,
